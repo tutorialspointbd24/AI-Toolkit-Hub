@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="logo.png"> 
+    <title>AI Tools Hub - Complete Directory of AI Tools</title>
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <style>
+        /* ============================================================
+           RESET & BASE
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f0f5fe;
+            min-height: 100vh;
+            padding: 24px;
+            color: #0b1e33;
+        }
+
+        /* ============================================================
+           CONTAINER
+           ============================================================ */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        /* ============================================================
+           HEADER
+           ============================================================ */
+        .header {
+            text-align: center;
+            padding: 48px 32px 40px;
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 80px 80px 40px 40px;
+            box-shadow: 0 20px 60px rgba(18, 52, 106, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            margin-bottom: 44px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(45, 122, 255, 0.07) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header .logo-icon {
+            font-size: 3.2rem;
+            color: #2d7aff;
+            margin-bottom: 8px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .header h1 {
+            font-size: 3.6rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, #0b2b5c 0%, #1a5adf 50%, #2d7aff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #2a4e7a;
+            margin-top: 6px;
+            opacity: 0.85;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #1a3a7a, #2d7aff);
+            color: white;
+            padding: 8px 28px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            box-shadow: 0 4px 20px rgba(45, 122, 255, 0.25);
+        }
+
+        .header .badge-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(45, 122, 255, 0.2);
+            color: #1a3a7a;
+            padding: 8px 28px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* ============================================================
+           SEARCH BAR
+           ============================================================ */
+        .search-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 44px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 4px 4px 4px 28px;
+            border-radius: 80px;
+            box-shadow: 0 12px 48px rgba(18, 52, 106, 0.10);
+            width: 100%;
+            max-width: 640px;
+            border: 1px solid #dce8f5;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            border-color: #2d7aff;
+            box-shadow: 0 12px 48px rgba(45, 122, 255, 0.16);
+            transform: scale(1.01);
+        }
+
+        .search-box i {
+            color: #7a9bc7;
+            font-size: 1.1rem;
+        }
+
+        .search-box input {
+            border: none;
+            padding: 18px 20px;
+            font-size: 1rem;
+            width: 100%;
+            background: transparent;
+            outline: none;
+            color: #0b2b5c;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-box input::placeholder {
+            color: #a0bcdb;
+            font-weight: 400;
+        }
+
+        .search-box button {
+            background: linear-gradient(135deg, #1a4a9e, #2d7aff);
+            border: none;
+            color: white;
+            padding: 14px 36px;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-box button:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 28px rgba(45, 122, 255, 0.45);
+        }
+
+        /* ============================================================
+           FILTER TABS
+           ============================================================ */
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px 16px;
+            margin-bottom: 48px;
+        }
+
+        .filter-tabs button {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 10px 26px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #1e3f66;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-tabs button:hover {
+            background: white;
+            border-color: #b8d2f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        .filter-tabs button.active {
+            background: #1a3a7a;
+            color: white;
+            border-color: #1a3a7a;
+            box-shadow: 0 8px 28px rgba(26, 58, 122, 0.20);
+        }
+
+        .filter-tabs button .count {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0 10px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .filter-tabs button.active .count {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* ============================================================
+           TOOLS GRID
+           ============================================================ */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* ============================================================
+           TOOL CARD
+           ============================================================ */
+        .tool-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 32px;
+            padding: 28px 26px 24px;
+            box-shadow: 0 8px 32px rgba(18, 52, 106, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px) scale(1.01);
+            box-shadow: 0 28px 64px rgba(18, 52, 106, 0.12);
+            background: #ffffff;
+            border-color: #b8d6fa;
+        }
+
+        .tool-card:active {
+            transform: scale(0.98);
+        }
+
+        /* Card header with icon */
+        .tool-card .card-top {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+
+        .tool-card .icon-wrapper {
+            width: 58px;
+            height: 58px;
+            min-width: 58px;
+            background: linear-gradient(135deg, #e6effa, #d0e2f7);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #1a4a9e;
+            transition: 0.3s;
+        }
+
+        .tool-card:hover .icon-wrapper {
+            background: linear-gradient(135deg, #1a4a9e, #2d7aff);
+            color: white;
+            box-shadow: 0 8px 24px rgba(45, 122, 255, 0.25);
+        }
+
+        .tool-card .name-category {
+            flex: 1;
+        }
+
+        .tool-card .name-category h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0b2140;
+            line-height: 1.2;
+        }
+
+        .tool-card .category-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #2d7aff;
+            background: #e3edfc;
+            padding: 3px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 2px;
+        }
+
+        /* Description */
+        .tool-card .description {
+            color: #2f5278;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            flex: 1;
+            margin: 6px 0 18px 0;
+        }
+
+        /* Card footer */
+        .tool-card .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .tool-card .price-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #1e3f66;
+            background: #eef4fa;
+            padding: 6px 18px;
+            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tool-card .visit-link {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1a4a9e;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .tool-card:hover .visit-link {
+            color: #2d7aff;
+            gap: 14px;
+        }
+
+        .tool-card .visit-link i {
+            font-size: 0.75rem;
+            transition: 0.2s;
+        }
+
+        /* Hover arrow animation */
+        .tool-card:hover .visit-link i {
+            transform: translateX(4px);
+        }
+
+        /* ============================================================
+           NO RESULT
+           ============================================================ */
+        .no-result {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 30px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 60px;
+            color: #1e3f66;
+        }
+
+        .no-result i {
+            font-size: 3.6rem;
+            display: block;
+            margin-bottom: 20px;
+            color: #7a9bc7;
+        }
+
+        .no-result h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .no-result p {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        .footer {
+            text-align: center;
+            margin-top: 64px;
+            padding: 32px 10px 10px;
+            color: #3f6b92;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.03);
+            letter-spacing: 0.2px;
+        }
+
+        .footer span {
+            background: rgba(255, 255, 255, 0.4);
+            padding: 6px 20px;
+            border-radius: 40px;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+            .header {
+                padding: 32px 20px 28px;
+                border-radius: 40px;
+            }
+            .header h1 {
+                font-size: 2.4rem;
+            }
+            .header .subtitle {
+                font-size: 1rem;
+            }
+            .search-box {
+                flex-wrap: wrap;
+                background: transparent;
+                box-shadow: none;
+                padding: 0;
+                border: none;
+                gap: 10px;
+            }
+            .search-box input {
+                background: white;
+                border-radius: 60px;
+                padding: 16px 24px;
+                border: 1px solid #d4e2f0;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            }
+            .search-box button {
+                width: 100%;
+                justify-content: center;
+                padding: 16px;
+            }
+            .search-box i:first-child {
+                display: none;
+            }
+            .filter-tabs button {
+                font-size: 0.8rem;
+                padding: 8px 18px;
+            }
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .tool-card {
+                padding: 22px 20px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .header .badge,
+            .header .badge-outline {
+                font-size: 0.7rem;
+                padding: 6px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ==========================================================
+        HEADER
+        ========================================================== -->
+        <header class="header">
+            <div class="logo-icon"><i class="fas fa-robot"></i></div>
+            <h1>AI Tools Hub</h1>
+            <p class="subtitle">The complete directory of the most powerful AI tools in 2026</p>
+            <div class="badge-group">
+                <span class="badge"><i class="fas fa-bolt"></i> 29+ Tools</span>
+                <span class="badge-outline"><i class="fas fa-layer-group"></i> 8 Categories</span>
+                <span class="badge-outline"><i class="fas fa-sync-alt"></i> Updated Weekly</span>
+            </div>
+        </header>
+
+        <!-- ==========================================================
+        SEARCH
+        ========================================================== -->
+        <div class="search-wrapper">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search for any AI tool... (e.g. ChatGPT, Midjourney)" />
+                <button id="searchBtn"><i class="fas fa-arrow-right"></i> Search</button>
+            </div>
+        </div>
+
+        <!-- ==========================================================
+        FILTER TABS
+        ========================================================== -->
+        <div class="filter-tabs" id="filterTabs">
+            <button class="active" data-category="all">🔮 All <span class="count">29</span></button>
+            <button data-category="chatbot">💬 Chatbots <span class="count">8</span></button>
+            <button data-category="writing">✍️ Writing <span class="count">4</span></button>
+            <button data-category="image">🖼️ Image <span class="count">4</span></button>
+            <button data-category="video">🎬 Video <span class="count">4</span></button>
+            <button data-category="code">💻 Coding <span class="count">3</span></button>
+            <button data-category="audio">🎧 Audio <span class="count">2</span></button>
+            <button data-category="productivity">⚙️ Productivity <span class="count">4</span></button>
+        </div>
+
+        <!-- ==========================================================
+        TOOLS GRID
+        ========================================================== -->
+        <div class="tools-grid" id="toolsGrid"></div>
+
+        <!-- ==========================================================
+        FOOTER
+        ========================================================== -->
+        <div class="footer">
+            <span><i class="fas fa-brain" style="margin-right:8px;"></i> AI Tools Hub · All modern AI tools in one place</span>
+        </div>
+    </div>
+
+    <script>
+        // =============================================================
+        //  DATA — All tools with English descriptions
+        // =============================================================
+        const toolsData = [
+            // ---- CHATBOTS ----
+            { id: 1, name: 'ChatGPT', category: 'chatbot', icon: 'fa-comment-dots', desc: 'OpenAI\'s flagship model with GPT-4o, deep research, and custom GPTs.', price: 'Free / Paid', url: 'https://chat.openai.com' },
+            { id: 2, name: 'Claude', category: 'chatbot', icon: 'fa-message', desc: 'Anthropic\'s most capable assistant, excels at long documents and coding.', price: 'Free / Paid', url: 'https://claude.ai' },
+            { id: 3, name: 'Gemini', category: 'chatbot', icon: 'fa-star', desc: 'Google\'s multimodal AI deeply integrated with Gmail, Drive, and Docs.', price: 'Free', url: 'https://gemini.google.com' },
+            { id: 4, name: 'DeepSeek', category: 'chatbot', icon: 'fa-brain', desc: 'Open-weight model from China with unlimited free chat and advanced reasoning.', price: 'Free', url: 'https://deepseek.com' },
+            { id: 5, name: 'Grok', category: 'chatbot', icon: 'fa-hashtag', desc: 'xAI\'s tool with real-time data integration from X (Twitter).', price: 'Paid', url: 'https://grok.x.ai' },
+            { id: 6, name: 'Microsoft Copilot', category: 'chatbot', icon: 'fa-windows', desc: 'Built-in AI assistant for Windows, Edge, and Office 365.', price: 'Free / Paid', url: 'https://copilot.microsoft.com' },
+            { id: 7, name: 'Perplexity AI', category: 'chatbot', icon: 'fa-globe', desc: 'AI-powered search engine that answers with citations and sources.', price: 'Free', url: 'https://perplexity.ai' },
+            { id: 8, name: 'Meta AI', category: 'chatbot', icon: 'fa-facebook', desc: 'Built-in assistant across WhatsApp, Instagram, and Facebook.', price: 'Free', url: 'https://meta.ai' },
+
+            // ---- WRITING ----
+            { id: 9, name: 'Grammarly', category: 'writing', icon: 'fa-pen-fancy', desc: 'World-class grammar, tone, and style correction for flawless writing.', price: 'Free / Paid', url: 'https://grammarly.com' },
+            { id: 10, name: 'QuillBot', category: 'writing', icon: 'fa-rotate-right', desc: 'Specialized in paraphrasing, summarizing, and fluency enhancement.', price: 'Free / Paid', url: 'https://quillbot.com' },
+            { id: 11, name: 'Copy.ai', category: 'writing', icon: 'fa-copy', desc: 'Generate marketing content, blogs, and social media captions instantly.', price: 'Free / Paid', url: 'https://copy.ai' },
+            { id: 12, name: 'Wordtune', category: 'writing', icon: 'fa-feather-pointed', desc: 'Rewrite sentences and adjust tone for more impactful communication.', price: 'Free / Paid', url: 'https://wordtune.com' },
+
+            // ---- IMAGE ----
+            { id: 13, name: 'Midjourney', category: 'image', icon: 'fa-palette', desc: 'The best AI for artistic, high-quality, and stylized image generation.', price: 'Paid', url: 'https://midjourney.com' },
+            { id: 14, name: 'DALL-E 3', category: 'image', icon: 'fa-image', desc: 'OpenAI\'s text-to-image model with superior prompt adherence and creativity.', price: 'Paid', url: 'https://openai.com/dall-e' },
+            { id: 15, name: 'Stable Diffusion', category: 'image', icon: 'fa-cloud-arrow-up', desc: 'Open-source image generation, completely free and highly customizable.', price: 'Free', url: 'https://stability.ai' },
+            { id: 16, name: 'Adobe Firefly', category: 'image', icon: 'fa-wand-magic-sparkles', desc: 'Adobe\'s generative fill and image editing suite for professionals.', price: 'Paid', url: 'https://firefly.adobe.com' },
+
+            // ---- VIDEO ----
+            { id: 17, name: 'Sora', category: 'video', icon: 'fa-film', desc: 'OpenAI\'s text-to-video model creating realistic and cinematic clips.', price: 'Limited', url: 'https://openai.com/sora' },
+            { id: 18, name: 'Runway', category: 'video', icon: 'fa-scissors', desc: 'AI video editing, generative extensions, and green screen removal.', price: 'Free / Paid', url: 'https://runwayml.com' },
+            { id: 19, name: 'HeyGen', category: 'video', icon: 'fa-user-tie', desc: 'Specialized in digital humans, AI avatars, and video translation.', price: 'Free / Paid', url: 'https://heygen.com' },
+            { id: 20, name: 'Pika', category: 'video', icon: 'fa-play', desc: 'Quick and intuitive AI video generation from text prompts.', price: 'Free / Paid', url: 'https://pika.art' },
+
+            // ---- CODING ----
+            { id: 21, name: 'Cursor', category: 'code', icon: 'fa-code', desc: 'AI-powered code editor built for "vibe coding" and rapid development.', price: 'Free / Paid', url: 'https://cursor.sh' },
+            { id: 22, name: 'GitHub Copilot', category: 'code', icon: 'fa-github', desc: 'GitHub\'s AI programming assistant for code completion and debugging.', price: 'Paid', url: 'https://github.com/features/copilot' },
+            { id: 23, name: 'Replit AI', category: 'code', icon: 'fa-terminal', desc: 'Write, run, and deploy code in the browser with AI assistance.', price: 'Free / Paid', url: 'https://replit.com' },
+
+            // ---- AUDIO ----
+            { id: 24, name: 'ElevenLabs', category: 'audio', icon: 'fa-microphone', desc: 'Ultra-realistic text-to-speech and voice cloning technology.', price: 'Free / Paid', url: 'https://elevenlabs.io' },
+            { id: 25, name: 'Suno', category: 'audio', icon: 'fa-music', desc: 'Generate complete songs, melodies, and vocals from text prompts.', price: 'Free / Paid', url: 'https://suno.com' },
+
+            // ---- PRODUCTIVITY ----
+            { id: 26, name: 'Notion AI', category: 'productivity', icon: 'fa-book', desc: 'AI-powered writing, summarization, and brainstorming inside Notion.', price: 'Paid', url: 'https://notion.so' },
+            { id: 27, name: 'NotebookLM', category: 'productivity', icon: 'fa-headphones', desc: 'Google\'s tool that turns uploaded documents into podcast-style audio.', price: 'Free', url: 'https://notebooklm.google' },
+            { id: 28, name: 'Zapier', category: 'productivity', icon: 'fa-bolt', desc: 'Automation hub connecting thousands of apps to streamline workflows.', price: 'Free / Paid', url: 'https://zapier.com' },
+            { id: 29, name: 'Fireflies.ai', category: 'productivity', icon: 'fa-clock', desc: 'Record, transcribe, and summarize meetings automatically.', price: 'Free / Paid', url: 'https://fireflies.ai' },
+        ];
+
+        // =============================================================
+        //  DOM REFS
+        // =============================================================
+        const grid = document.getElementById('toolsGrid');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const filterBtns = document.querySelectorAll('.filter-tabs button');
+
+        let currentCategory = 'all';
+        let currentSearch = '';
+
+        // =============================================================
+        //  RENDER FUNCTION
+        // =============================================================
+        function renderTools() {
+            const filtered = toolsData.filter(tool => {
+                const matchCategory = currentCategory === 'all' || tool.category === currentCategory;
+                const query = currentSearch.toLowerCase().trim();
+                const matchSearch = query === '' ||
+                    tool.name.toLowerCase().includes(query) ||
+                    tool.desc.toLowerCase().includes(query) ||
+                    tool.category.includes(query);
+                return matchCategory && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-result">
+                        <i class="fas fa-face-frown"></i>
+                        <h3>No tools found</h3>
+                        <p>Try adjusting your search or filter criteria</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(tool => `
+                <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="tool-card">
+                    <div class="card-top">
+                        <div class="icon-wrapper"><i class="fas ${tool.icon}"></i></div>
+                        <div class="name-category">
+                            <h3>${tool.name}</h3>
+                            <span class="category-badge">${tool.category}</span>
+                        </div>
+                    </div>
+                    <p class="description">${tool.desc}</p>
+                    <div class="card-footer">
+                        <span class="price-tag"><i class="fas fa-tag" style="font-size:0.65rem;"></i> ${tool.price}</span>
+                        <span class="visit-link">Visit <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        // =============================================================
+        //  EVENT LISTENERS
+        // =============================================================
+
+        // 1. Filter buttons
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentCategory = this.dataset.category;
+                renderTools();
+            });
+        });
+
+        // 2. Search
+        function performSearch() {
+            currentSearch = searchInput.value;
+            renderTools();
+        }
+
+        searchBtn.addEventListener('click', performSearch);
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') performSearch();
+        });
+
+        // 3. Live search on input (optional — uncomment if desired)
+        // searchInput.addEventListener('input', performSearch);
+
+        // =============================================================
+        //  INITIAL RENDER
+        // =============================================================
+        renderTools();
+    </script>
+</body>
+</html>
