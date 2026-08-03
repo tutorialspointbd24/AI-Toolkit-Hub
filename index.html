@@ -10,7 +10,7 @@
   <!-- Google Font: Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
   <style>
-    /* ----- RESET & VARIABLES (PREMIUM DARK) ----- */
+    /* ----- RESET & VARIABLES (LIGHT THEME) ----- */
     * {
       margin: 0;
       padding: 0;
@@ -18,21 +18,21 @@
     }
 
     :root {
-      --bg-body: #060b16;
-      --bg-surface: #0c1322;
-      --bg-card: #111b32;
-      --bg-card-hover: #172341;
-      --text-primary: #f0f4ff;
-      --text-secondary: #b8c8e8;
-      --text-muted: #5a6f94;
-      --border-light: #1a2848;
-      --border-glow: #2a4070;
-      --accent-1: #4f8cff;
-      --accent-2: #8b5cf6;
-      --accent-3: #ec4899;
-      --accent-4: #34d399;
-      --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.5);
-      --shadow-hover: 0 24px 64px rgba(0, 0, 0, 0.9), 0 8px 24px rgba(0, 0, 0, 0.6);
+      --bg-body: #f0f4fc;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8faff;
+      --text-primary: #0b1120;
+      --text-secondary: #4b5563;
+      --text-muted: #6b7a93;
+      --border-light: #e2e8f0;
+      --border-glow: #b8c8e8;
+      --accent-1: #2563eb;
+      --accent-2: #7c3aed;
+      --accent-3: #db2777;
+      --accent-4: #059669;
+      --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.03);
+      --shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.04);
       --radius-lg: 20px;
       --radius-md: 14px;
       --radius-sm: 10px;
@@ -55,7 +55,7 @@
       overflow-x: hidden;
     }
 
-    /* ----- ANIMATED BACKGROUND (gradient mesh) ----- */
+    /* ----- ANIMATED BACKGROUND (light gradient mesh) ----- */
     body::before {
       content: '';
       position: fixed;
@@ -64,10 +64,10 @@
       width: 200%;
       height: 200%;
       background:
-        radial-gradient(circle at 15% 25%, rgba(79, 140, 255, 0.06) 0%, transparent 50%),
-        radial-gradient(circle at 85% 75%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
-        radial-gradient(circle at 45% 85%, rgba(52, 211, 153, 0.03) 0%, transparent 40%),
-        radial-gradient(circle at 70% 15%, rgba(236, 72, 153, 0.03) 0%, transparent 40%);
+        radial-gradient(circle at 15% 25%, rgba(37, 99, 235, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 85% 75%, rgba(124, 58, 237, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 45% 85%, rgba(5, 150, 105, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 70% 15%, rgba(219, 39, 119, 0.03) 0%, transparent 40%);
       animation: meshMove 35s ease-in-out infinite alternate;
       z-index: 0;
       pointer-events: none;
@@ -84,13 +84,13 @@
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
       opacity: 0.5;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* ----- HERO (premium) ----- */
+    /* ----- HERO (light) ----- */
     .hero {
       text-align: center;
       padding: 1.8rem 1rem 2.2rem;
@@ -103,8 +103,8 @@
 
     .hero .badge-top {
       display: inline-block;
-      background: rgba(79, 140, 255, 0.1);
-      border: 1px solid rgba(79, 140, 255, 0.15);
+      background: rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(37, 99, 235, 0.15);
       border-radius: var(--radius-full);
       padding: 0.25rem 1.1rem;
       font-size: 0.65rem;
@@ -134,7 +134,7 @@
     }
 
     .hero h1 .highlight {
-      background: linear-gradient(135deg, #4f8cff, #8b5cf6, #ec4899, #4f8cff);
+      background: linear-gradient(135deg, #2563eb, #7c3aed, #db2777, #2563eb);
       background-size: 300% 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -165,11 +165,11 @@
       font-weight: 500;
       letter-spacing: 0.3px;
       display: inline-block;
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(12px);
       padding: 0.35rem 1.8rem;
       border-radius: var(--radius-full);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.06);
       margin-top: 0.5rem;
       animation: fadeUp 0.8s ease-out 0.3s forwards;
       opacity: 0;
@@ -178,8 +178,8 @@
     }
 
     .hero .sub:hover {
-      border-color: rgba(79, 140, 255, 0.2);
-      box-shadow: 0 0 40px rgba(79, 140, 255, 0.04);
+      border-color: rgba(37, 99, 235, 0.2);
+      box-shadow: 0 0 40px rgba(37, 99, 235, 0.04);
     }
 
     .hero .sub i {
@@ -187,7 +187,7 @@
       margin-right: 8px;
     }
 
-    /* ----- TOOLS GRID (smaller cards) ----- */
+    /* ----- TOOLS GRID ----- */
     .container {
       max-width: 1240px;
       margin: 0 auto;
@@ -205,7 +205,7 @@
       margin-top: 0.5rem;
     }
 
-    /* ----- SMALLER PREMIUM CARD DESIGN ----- */
+    /* ----- CARD DESIGN (LIGHT) ----- */
     .tool-card {
       background: var(--bg-card);
       border: 1px solid var(--border-light);
@@ -235,7 +235,7 @@
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* ----- premium gradient border ----- */
+    /* ----- gradient border (light) ----- */
     .tool-card::before {
       content: '';
       position: absolute;
@@ -243,10 +243,10 @@
       border-radius: var(--radius-lg);
       padding: 1.5px;
       background: linear-gradient(135deg, 
-        rgba(79, 140, 255, 0.3), 
-        rgba(139, 92, 246, 0.2), 
-        rgba(236, 72, 153, 0.2), 
-        rgba(79, 140, 255, 0.3));
+        rgba(37, 99, 235, 0.25), 
+        rgba(124, 58, 237, 0.2), 
+        rgba(219, 39, 119, 0.2), 
+        rgba(37, 99, 235, 0.25));
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
@@ -259,7 +259,7 @@
       opacity: 1;
     }
 
-    /* ----- top shimmer bar (brighter) ----- */
+    /* ----- top shimmer bar (light) ----- */
     .tool-card::after {
       content: '';
       position: absolute;
@@ -267,7 +267,7 @@
       left: 0;
       right: 0;
       height: 2.5px;
-      background: linear-gradient(90deg, #4f8cff, #8b5cf6, #ec4899, #4f8cff);
+      background: linear-gradient(90deg, #2563eb, #7c3aed, #db2777, #2563eb);
       background-size: 300% 100%;
       opacity: 0;
       transition: var(--transition);
@@ -284,13 +284,13 @@
     }
 
     .tool-card:hover {
-      border-color: transparent;
+      border-color: #c8d8f0;
       background: var(--bg-card-hover);
       box-shadow: var(--shadow-hover);
       transform: translateY(-6px) scale(1.01);
     }
 
-    /* ----- smaller icon with premium glow (brighter colors) ----- */
+    /* ----- icon wrap (light) ----- */
     .tool-card .icon-wrap {
       width: 48px;
       height: 48px;
@@ -300,10 +300,10 @@
       justify-content: center;
       font-size: 1.4rem;
       margin-bottom: 1rem;
-      background: var(--accent-light);
+      background: #eef2ff;
       color: var(--accent-1);
       transition: var(--transition);
-      border: 1px solid rgba(79, 140, 255, 0.12);
+      border: 1px solid rgba(37, 99, 235, 0.12);
       position: relative;
       overflow: hidden;
       flex-shrink: 0;
@@ -313,7 +313,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(79, 140, 255, 0.1), rgba(139, 92, 246, 0.1));
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(124, 58, 237, 0.08));
       opacity: 0;
       transition: var(--transition);
     }
@@ -324,8 +324,8 @@
 
     .tool-card:hover .icon-wrap {
       transform: scale(1.05) rotate(-2deg);
-      border-color: rgba(79, 140, 255, 0.3);
-      box-shadow: 0 0 35px rgba(79, 140, 255, 0.1);
+      border-color: rgba(37, 99, 235, 0.2);
+      box-shadow: 0 0 35px rgba(37, 99, 235, 0.06);
     }
 
     .tool-card .icon-wrap i {
@@ -333,45 +333,45 @@
       z-index: 1;
     }
 
-    /* BRIGHTER icon color variants */
+    /* LIGHT icon color variants */
     .tool-card .icon-wrap.purple {
-      background: #1a1640;
-      color: #a78bfa;
-      border-color: rgba(167, 139, 250, 0.15);
+      background: #f0edff;
+      color: #7c3aed;
+      border-color: rgba(124, 58, 237, 0.12);
     }
     .tool-card:hover .icon-wrap.purple {
-      box-shadow: 0 0 35px rgba(167, 139, 250, 0.12);
-      border-color: rgba(167, 139, 250, 0.3);
+      box-shadow: 0 0 35px rgba(124, 58, 237, 0.08);
+      border-color: rgba(124, 58, 237, 0.2);
     }
     .tool-card .icon-wrap.green {
-      background: #0d2a20;
-      color: #34d399;
-      border-color: rgba(52, 211, 153, 0.15);
+      background: #ecfdf5;
+      color: #059669;
+      border-color: rgba(5, 150, 105, 0.12);
     }
     .tool-card:hover .icon-wrap.green {
-      box-shadow: 0 0 35px rgba(52, 211, 153, 0.12);
-      border-color: rgba(52, 211, 153, 0.3);
+      box-shadow: 0 0 35px rgba(5, 150, 105, 0.08);
+      border-color: rgba(5, 150, 105, 0.2);
     }
     .tool-card .icon-wrap.orange {
-      background: #2a1f0e;
-      color: #fbbf24;
-      border-color: rgba(251, 191, 36, 0.15);
+      background: #fffbeb;
+      color: #d97706;
+      border-color: rgba(217, 119, 6, 0.12);
     }
     .tool-card:hover .icon-wrap.orange {
-      box-shadow: 0 0 35px rgba(251, 191, 36, 0.12);
-      border-color: rgba(251, 191, 36, 0.3);
+      box-shadow: 0 0 35px rgba(217, 119, 6, 0.08);
+      border-color: rgba(217, 119, 6, 0.2);
     }
     .tool-card .icon-wrap.pink {
-      background: #2a1420;
-      color: #f472b6;
-      border-color: rgba(244, 114, 182, 0.15);
+      background: #fdf2f8;
+      color: #db2777;
+      border-color: rgba(219, 39, 119, 0.12);
     }
     .tool-card:hover .icon-wrap.pink {
-      box-shadow: 0 0 35px rgba(244, 114, 182, 0.12);
-      border-color: rgba(244, 114, 182, 0.3);
+      box-shadow: 0 0 35px rgba(219, 39, 119, 0.08);
+      border-color: rgba(219, 39, 119, 0.2);
     }
 
-    /* ----- card content (compact) ----- */
+    /* ----- card content ----- */
     .tool-card h3 {
       font-size: 1.05rem;
       font-weight: 700;
@@ -382,7 +382,7 @@
     }
 
     .tool-card:hover h3 {
-      color: #fff;
+      color: #0b1120;
     }
 
     .tool-card p {
@@ -395,10 +395,10 @@
     }
 
     .tool-card:hover p {
-      color: #c8d8f0;
+      color: #374151;
     }
 
-    /* ----- premium meta section (compact) ----- */
+    /* ----- meta section (light) ----- */
     .tool-card .meta {
       display: flex;
       align-items: center;
@@ -413,7 +413,7 @@
     }
 
     .tool-card:hover .meta {
-      border-top-color: rgba(79, 140, 255, 0.12);
+      border-top-color: rgba(37, 99, 235, 0.1);
     }
 
     .tool-card .meta .arrow-link {
@@ -439,9 +439,9 @@
       transform: translateX(4px);
     }
 
-    /* ----- premium badges (brighter) ----- */
+    /* ----- badges (light) ----- */
     .tool-card .meta .badge {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(0, 0, 0, 0.03);
       border: 1px solid var(--border-light);
       border-radius: var(--radius-full);
       padding: 0.1rem 0.85rem;
@@ -454,34 +454,34 @@
     }
 
     .tool-card:hover .badge {
-      border-color: rgba(79, 140, 255, 0.15);
+      border-color: rgba(37, 99, 235, 0.15);
     }
 
     .tool-card .meta .badge.popular {
-      background: rgba(79, 140, 255, 0.12);
-      border-color: rgba(79, 140, 255, 0.2);
-      color: #7aafff;
+      background: rgba(37, 99, 235, 0.08);
+      border-color: rgba(37, 99, 235, 0.15);
+      color: #2563eb;
     }
 
     .tool-card .meta .badge.new {
-      background: rgba(139, 92, 246, 0.12);
-      border-color: rgba(139, 92, 246, 0.2);
-      color: #b8a5ff;
+      background: rgba(124, 58, 237, 0.08);
+      border-color: rgba(124, 58, 237, 0.15);
+      color: #7c3aed;
     }
 
     .tool-card .meta .badge.featured {
-      background: rgba(52, 211, 153, 0.12);
-      border-color: rgba(52, 211, 153, 0.2);
-      color: #5ee7b7;
+      background: rgba(5, 150, 105, 0.08);
+      border-color: rgba(5, 150, 105, 0.15);
+      color: #059669;
     }
 
     .tool-card .meta .badge.essential {
-      background: rgba(244, 114, 182, 0.12);
-      border-color: rgba(244, 114, 182, 0.2);
-      color: #f9a8d4;
+      background: rgba(219, 39, 119, 0.08);
+      border-color: rgba(219, 39, 119, 0.15);
+      color: #db2777;
     }
 
-    /* ----- card number indicator (premium detail) ----- */
+    /* ----- card number indicator ----- */
     .tool-card .card-number {
       position: absolute;
       top: 1rem;
@@ -499,7 +499,7 @@
       color: var(--accent-1);
     }
 
-    /* ----- FOOTER (premium) ----- */
+    /* ----- FOOTER (light) ----- */
     .footer {
       border-top: 1px solid var(--border-light);
       padding: 2rem 0 0.5rem;
@@ -515,13 +515,13 @@
     }
 
     .footer strong {
-      color: var(--text-secondary);
+      color: var(--text-primary);
       font-weight: 600;
       transition: var(--transition);
     }
 
     .footer strong:hover {
-      color: #fff;
+      color: var(--accent-1);
     }
 
     .footer .heart {
