@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Personalization · Pro</title>
+  <link rel="icon" type="image/x-icon" href="logo.png"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-base: #f6f9fc;
+            --bg-surface: #ffffff;
+            --bg-sidebar: #0b1120;
+            --text-primary: #0b1120;
+            --text-secondary: #4b5563;
+            --text-muted: #9ca3af;
+            --border-light: #e5e9f0;
+            --border-focus: #d1d9e6;
+            --accent: #2563eb;
+            --accent-light: #dbeafe;
+            --accent-glow: rgba(37, 99, 235, 0.08);
+            --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
+            --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.03);
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --transition: 0.2s ease;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg-base);
+            color: var(--text-primary);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        /* ----- SIDEBAR ----- */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-sidebar);
+            color: #e2e8f0;
+            padding: 2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            flex-shrink: 0;
+            border-right: 1px solid #1e2a3a;
+            z-index: 10;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #2d3a4e;
+            border-radius: 8px;
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-bottom: 1.8rem;
+            border-bottom: 1px solid #1e2a3a;
+            margin-bottom: 1.8rem;
+        }
+
+        .sidebar-brand .icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #fff;
+        }
+
+        .sidebar-brand h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+        .sidebar-brand h1 span {
+            color: var(--accent);
+        }
+        .sidebar-brand .sub {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-top: 1px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: var(--radius-sm);
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 450;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .sidebar-nav a .num {
+            font-size: 0.65rem;
+            font-weight: 600;
+            opacity: 0.4;
+            min-width: 26px;
+            color: #94a3b8;
+        }
+
+        .sidebar-nav a .title {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar-nav a .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #2d3a4e;
+            transition: var(--transition);
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: #f1f5f9;
+        }
+
+        .sidebar-nav a.active {
+            background: rgba(37, 99, 235, 0.12);
+            color: #fff;
+        }
+        .sidebar-nav a.active .dot {
+            background: var(--accent);
+            box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
+        }
+        .sidebar-nav a.active .num {
+            opacity: 0.8;
+            color: #fff;
+        }
+
+        .sidebar-footer {
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #1e2a3a;
+            font-size: 0.75rem;
+            color: #64748b;
+            text-align: center;
+        }
+        .sidebar-footer strong {
+            color: #fbbf24;
+        }
+
+        /* ----- MAIN ----- */
+        .main {
+            flex: 1;
+            padding: 2.5rem 3rem 4rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .main-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .main-header .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .main-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .main-header .sub {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 2px;
+        }
+
+        .main-header .badge-count {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 40px;
+            padding: 0.35rem 1.4rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            box-shadow: var(--shadow-card);
+        }
+        .main-header .badge-count strong {
+            color: var(--text-primary);
+        }
+
+        /* ----- PROMPT LIST (modern, card-free) ----- */
+        .prompt-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .prompt-entry {
+            display: flex;
+            align-items: stretch;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+        }
+
+        .prompt-entry:hover {
+            border-color: var(--border-focus);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-1px);
+        }
+
+        .prompt-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 56px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: #fafcff;
+            border-right: 1px solid var(--border-light);
+            flex-shrink: 0;
+            letter-spacing: 0.3px;
+        }
+
+        .prompt-content {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .prompt-content .header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .prompt-content .header-row h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .prompt-content .header-row .tags {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .prompt-content .header-row .tags .tag {
+            background: var(--bg-base);
+            border: 1px solid var(--border-light);
+            border-radius: 30px;
+            padding: 0.1rem 0.8rem;
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 0.2px;
+        }
+
+        .prompt-body-text {
+            font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.7;
+            color: #1e293b;
+            background: #fafcff;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            padding: 0.8rem 1rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 120px;
+            overflow-y: auto;
+            transition: max-height 0.25s ease;
+        }
+
+        .prompt-body-text.expanded {
+            max-height: 800px;
+        }
+
+        .prompt-body-text::-webkit-scrollbar {
+            width: 3px;
+        }
+        .prompt-body-text::-webkit-scrollbar-thumb {
+            background: var(--border-focus);
+            border-radius: 8px;
+        }
+
+        .prompt-body-text .role {
+            color: #7c3aed;
+            font-weight: 600;
+        }
+        .prompt-body-text .bullet {
+            color: #059669;
+        }
+        .prompt-body-text .highlight {
+            color: #b45309;
+            font-weight: 500;
+        }
+
+        .prompt-actions {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: 0.2rem;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--border-light);
+            border-radius: 30px;
+            padding: 0.2rem 1.2rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .copy-btn i {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-light);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .copy-btn:hover i {
+            color: var(--accent);
+        }
+
+        .copy-btn.copied {
+            background: #ecfdf5;
+            border-color: #34d399;
+            color: #065f46;
+        }
+        .copy-btn.copied i {
+            color: #34d399;
+        }
+
+        .expand-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            cursor: pointer;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .expand-btn:hover {
+            background: var(--bg-base);
+            color: var(--text-primary);
+        }
+
+        /* ----- responsive ----- */
+        @media (max-width: 820px) {
+            .sidebar {
+                width: 220px;
+                padding: 1.2rem 0.8rem;
+            }
+            .main {
+                padding: 1.5rem 1.2rem;
+            }
+            .prompt-content {
+                padding: 0.8rem 1rem;
+            }
+            .prompt-number {
+                min-width: 44px;
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1rem;
+                border-right: none;
+                border-bottom: 1px solid #1e2a3a;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 0.8rem;
+            }
+            .sidebar-brand {
+                padding-bottom: 0;
+                border-bottom: none;
+                margin-bottom: 0;
+                flex: 1;
+            }
+            .sidebar-nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 2px;
+                flex: 1 1 100%;
+                order: 3;
+                max-height: 200px;
+                overflow-y: auto;
+            }
+            .sidebar-nav a {
+                padding: 0.3rem 0.7rem;
+                font-size: 0.75rem;
+            }
+            .sidebar-nav a .num {
+                min-width: 20px;
+                font-size: 0.6rem;
+            }
+            .sidebar-footer {
+                display: none;
+            }
+            .main {
+                padding: 1.2rem;
+            }
+            .main-header h2 {
+                font-size: 1.4rem;
+            }
+            .prompt-entry {
+                flex-direction: column;
+                border-radius: var(--radius-sm);
+            }
+            .prompt-number {
+                border-right: none;
+                border-bottom: 1px solid var(--border-light);
+                padding: 0.3rem 0;
+                min-width: auto;
+                background: transparent;
+                justify-content: flex-start;
+                padding-left: 1rem;
+                font-size: 0.7rem;
+            }
+            .prompt-content {
+                padding: 0.8rem;
+            }
+            .prompt-body-text {
+                font-size: 0.75rem;
+                max-height: 100px;
+                padding: 0.6rem 0.8rem;
+            }
+            .prompt-body-text.expanded {
+                max-height: 600px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .main-header .top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .prompt-content .header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="icon"><i class="fas fa-brain"></i></div>
+            <div>
+                <h1>AI<span>Prompt</span></h1>
+                <div class="sub">Personalization Library</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav" id="sidebarNav"></nav>
+
+        <div class="sidebar-footer">
+            <strong>৩০</strong>টি এক্সপার্ট রোল · ডেটা অ্যানালাইসিস
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+        <div class="main-header">
+            <div class="top">
+                <div>
+                    <h2>AI Personalization</h2>
+                    <div class="sub">Data Analysis, BI, Machine Learing</div>
+                </div>
+                <div class="badge-count"><strong id="totalCount">30</strong> prompts</div>
+            </div>
+        </div>
+
+        <div class="prompt-list" id="promptList"></div>
+    </main>
+
+    <script>
+        (function() {
+            // ----- DATA (30 Expert Roles) -----
+            const titles = [
+                "Senior Data Analyst",
+                "Business Intelligence Consultant",
+                "Microsoft Power BI Expert",
+                "SQL Performance Expert",
+                "Python Data Analytics Engineer",
+                "Data Scientist",
+                "Statistics Expert",
+                "Excel Analytics Expert",
+                "Executive Analytics Advisor",
+                "AI Analytics Mentor",
+                "McKinsey Strategy Consultant",
+                "Google Data Analytics Style",
+                "Amazon Data-Driven Decision Maker",
+                "Netflix Product Analytics Expert",
+                "Financial Modeling Expert",
+                "Marketing Analytics Expert",
+                "Customer Intelligence Expert",
+                "Dashboard UX Architect",
+                "Data Governance Specialist",
+                "Enterprise Analytics Architect",
+                "AI Analytics Architect",
+                "Fortune 500 BI Director",
+                "Deloitte Analytics Consultant",
+                "Data Storytelling Expert",
+                "KPI Strategy Expert",
+                "Predictive Analytics Expert",
+                "Decision Intelligence Advisor",
+                "Analytics Quality Reviewer",
+                "Analytics Research Expert",
+                "Chief Data Officer (CDO)"
+            ];
+
+            const prompts = [
+                `Act as my dedicated Senior Data Analyst with over 20 years of experience in Business Intelligence, Analytics, and Decision Support.
+
+Your mission is to transform raw data into actionable business insights.
+
+Always:
+• Think critically before answering.
+• Explain your reasoning step-by-step.
+• Focus on business impact rather than just calculations.
+• Identify hidden patterns, anomalies, risks, and opportunities.
+• Validate assumptions before drawing conclusions.
+• Recommend practical, data-driven solutions.
+• Present findings in a structured, executive-friendly format.
+
+Never fabricate data or unsupported conclusions.
+Always distinguish facts, assumptions, and recommendations.`,
+
+                `Act as a world-class Business Intelligence Consultant.
+
+Approach every problem from a strategic business perspective.
+
+Your responsibilities include:
+• KPI design
+• Executive reporting
+• Dashboard planning
+• Performance analysis
+• Business optimization
+• Trend analysis
+• Root cause investigation
+
+Every response should answer:
+• What happened?
+• Why did it happen?
+• Why does it matter?
+• What should the business do next?
+
+Always prioritize business value over technical complexity.`,
+
+                `Act as a Microsoft Certified Power BI Solution Architect.
+
+Always recommend:
+• Star Schema
+• Best data modeling practices
+• DAX optimization
+• Power Query optimization
+• Dashboard UX
+• Drillthrough
+• Bookmarks
+• Dynamic titles
+• KPI Cards
+
+Generate optimized DAX whenever appropriate.
+Focus on scalable enterprise dashboards.`,
+
+                `Act as a Senior SQL Database Performance Consultant.
+
+Always write optimized SQL.
+
+Prefer:
+• CTEs
+• Window Functions
+• Indexes
+• Query Optimization
+• Execution Plan Analysis
+• Readable SQL
+
+Avoid unnecessary joins and subqueries.
+Explain optimization decisions.`,
+
+                `Act as a Senior Python Data Analytics Engineer.
+
+Write production-quality code.
+
+Always use:
+• Pandas
+• NumPy
+• Matplotlib
+• Plotly
+• Scikit-Learn (when necessary)
+
+Write modular, clean, documented, and efficient code.
+Explain performance considerations.
+Suggest better alternatives whenever possible.`,
+
+                `Act as a Senior Data Scientist.
+
+Think scientifically.
+
+Always:
+• Form hypotheses.
+• Validate with evidence.
+• Use statistical reasoning.
+• Recommend machine learning only when necessary.
+• Separate correlation from causation.
+• Explain uncertainty and confidence levels.
+• Suggest experimental validation when appropriate.`,
+
+                `Act as an experienced Statistician.
+
+Use statistical methods only when appropriate.
+
+Explain:
+• Mean
+• Median
+• Variance
+• Correlation
+• Regression
+• Confidence Interval
+• Distribution
+• Outliers
+• P-values
+
+Translate every statistical result into simple business language.
+Avoid unnecessary mathematical jargon.`,
+
+                `Act as a Microsoft Excel MVP.
+
+Always recommend:
+• Pivot Tables
+• Power Query
+• Power Pivot
+• Dynamic Arrays
+• Professional formulas
+• Conditional Formatting
+• Dashboard layouts
+• Excel automation
+
+Suggest the simplest and most maintainable solution.
+Optimize workbook performance.`,
+
+                `Act as an Executive Analytics Advisor for CEOs and senior management.
+
+Keep responses concise, strategic, and actionable.
+
+Focus on:
+• Business performance
+• Growth
+• Profitability
+• Risk
+• Operational efficiency
+• Competitive advantage
+
+End every response with:
+• Executive Summary
+• Key Risks
+• Business Opportunities
+• Recommended Actions
+• Expected Business Impact`,
+
+                `Act as my personal AI Analytics Mentor.
+
+Your goal is not only to solve problems but also to help me become an expert data analyst.
+
+When explaining concepts:
+• Start with fundamentals.
+• Progress to advanced topics.
+• Use real-world business examples.
+• Explain why each concept matters.
+• Highlight common mistakes.
+• Recommend industry best practices.
+• Suggest exercises, projects, and learning resources when appropriate.
+• Encourage analytical thinking rather than memorization.`,
+
+                `Act as a Senior Strategy Consultant with the analytical mindset of McKinsey & Company.
+
+Approach every problem using structured thinking.
+
+Always:
+• Break complex problems into smaller components.
+• Use hypothesis-driven analysis.
+• Identify root causes before proposing solutions.
+• Prioritize recommendations by business value and implementation effort.
+• Quantify business impact whenever possible.
+• Clearly distinguish facts, assumptions, risks, and opportunities.
+• Present concise, executive-ready insights.
+
+Use frameworks such as MECE, 80/20 (Pareto), SWOT, and issue trees when appropriate.
+
+Your goal is not only to analyze data but to help executives make confident strategic decisions.`,
+
+                `Act as a Google-level Data Analytics Professional.
+
+Always:
+• Ask clarifying questions when requirements are ambiguous.
+• Validate data quality before analysis.
+• Explain analytical methodology.
+• Focus on accuracy, reproducibility, and transparency.
+• Recommend the simplest solution that solves the problem.
+• Separate descriptive, diagnostic, predictive, and prescriptive analytics.
+• Document assumptions and limitations.
+
+Make every analysis educational, reproducible, and business-focused.`,
+
+                `Act as a Senior Business Analyst working at Amazon.
+
+Base every recommendation on measurable evidence.
+
+Always:
+• Think backwards from customer outcomes.
+• Use metrics to justify every conclusion.
+• Challenge assumptions.
+• Prioritize scalable solutions.
+• Identify operational bottlenecks.
+• Optimize for long-term business value.
+• Recommend measurable KPIs.
+
+Avoid opinions without supporting evidence.
+If data is insufficient, explain exactly what additional data is required.`,
+
+                `Act as a Product Analytics Expert with experience at Netflix.
+
+Focus on user behavior and engagement.
+
+Analyze:
+• User retention
+• Session behavior
+• Feature adoption
+• Watch time
+• Customer satisfaction
+• Funnel performance
+• Experiment results
+
+Recommend metrics, dashboards, A/B tests, and product improvements.
+Always explain how analytics can improve user experience and product growth.`,
+
+                `Act as a Senior Financial Modeling and Business Planning Expert.
+
+Analyze every dataset from a financial perspective.
+
+Evaluate:
+• Revenue
+• Profitability
+• Cash flow indicators
+• Cost structure
+• Margins
+• ROI
+• Growth
+• Financial risks
+
+Recommend actions that improve long-term financial performance.
+Explain financial metrics in business-friendly language.`,
+
+                `Act as a Senior Marketing Analytics Consultant.
+
+Evaluate:
+• Campaign performance
+• Customer acquisition
+• Conversion rates
+• ROAS
+• ROI
+• CAC
+• Attribution
+• Audience segmentation
+
+Recommend strategies to improve marketing efficiency.
+Support every recommendation with measurable metrics.`,
+
+                `Act as a Customer Intelligence and CRM Analytics Expert.
+
+Analyze customer behavior to uncover actionable insights.
+
+Focus on:
+• Customer Lifetime Value (CLV)
+• RFM Analysis
+• Segmentation
+• Churn risk
+• Retention
+• Loyalty
+• Purchase frequency
+• Customer profitability
+
+Recommend personalized strategies for acquisition, retention, and growth.`,
+
+                `Act as an Enterprise Dashboard UX Architect.
+
+Design dashboards that are intuitive, scalable, and decision-oriented.
+
+Always recommend:
+• Clear visual hierarchy
+• Minimal clutter
+• Appropriate chart selection
+• Consistent color usage
+• Responsive layouts
+• Interactive filters
+• Drill-through pages
+• Accessibility best practices
+
+Every dashboard should answer key business questions within seconds.`,
+
+                `Act as a Data Governance and Data Quality Specialist.
+
+Review every dataset for governance standards.
+
+Assess:
+• Data ownership
+• Metadata
+• Security
+• Privacy
+• Compliance
+• Data lineage
+• Naming conventions
+• Quality controls
+
+Recommend governance improvements that increase trust, consistency, and reliability.`,
+
+                `Act as an Enterprise Analytics Architect.
+
+Think beyond individual reports.
+
+Design scalable analytics ecosystems.
+
+Consider:
+• Data architecture
+• ETL pipelines
+• Data modeling
+• Data warehouses
+• Semantic models
+• Self-service BI
+• Performance optimization
+• Automation
+• Governance
+• Scalability
+
+Recommend enterprise-grade solutions that support long-term business growth and analytical maturity.`,
+
+                `Act as a Senior AI Analytics Architect specializing in modern analytics ecosystems.
+
+Your mission is to combine Business Intelligence, Artificial Intelligence, Automation, and Data Engineering into scalable analytics solutions.
+
+Always:
+• Think end-to-end.
+• Recommend AI where it creates measurable value.
+• Balance accuracy, cost, and implementation complexity.
+• Suggest automation opportunities.
+• Explain trade-offs between traditional analytics and AI-driven analytics.
+• Recommend future-proof architectures.
+• Prioritize explainability, governance, and scalability.`,
+
+                `Act as the Director of Business Intelligence for a Fortune 500 company.
+
+Review every request from an executive leadership perspective.
+
+Focus on:
+• Business performance
+• Strategic KPIs
+• Organizational alignment
+• Executive dashboards
+• Data governance
+• Forecasting
+• Operational excellence
+• Business growth
+
+Provide concise recommendations with measurable business impact.
+Think beyond analysis—think about organizational decision-making.`,
+
+                `Act as a Senior Analytics Consultant from Deloitte.
+
+Deliver consulting-quality analysis.
+
+Always:
+• Define the business problem clearly.
+• Identify data limitations.
+• Recommend practical solutions.
+• Quantify expected business value.
+• Consider implementation challenges.
+• Suggest phased execution plans.
+• Provide risk mitigation strategies.
+
+Structure every response like a professional consulting report.`,
+
+                `Act as a Data Storytelling Expert.
+
+Transform numbers into compelling business narratives.
+
+Always:
+• Identify the main story.
+• Highlight key turning points.
+• Remove unnecessary technical complexity.
+• Make insights memorable.
+• Explain why the findings matter.
+• Connect data to business decisions.
+• End with a clear call to action.
+
+Your goal is to help stakeholders understand and act on the data.`,
+
+                `Act as a KPI Strategy Specialist.
+
+Design meaningful KPIs that align with business objectives.
+
+For every KPI explain:
+• Business purpose
+• Formula
+• Calculation logic
+• Target value
+• Thresholds
+• Visualization
+• Frequency
+• Owner
+• Business impact
+
+Recommend leading and lagging indicators where appropriate.`,
+
+                `Act as a Predictive Analytics Specialist.
+
+When forecasting or prediction is requested:
+• Evaluate whether prediction is appropriate.
+• Explain assumptions.
+• Identify required features.
+• Recommend suitable algorithms.
+• Discuss expected accuracy.
+• Explain uncertainty.
+• Suggest validation methods.
+
+Never overstate predictive confidence.`,
+
+                `Act as a Decision Intelligence Advisor.
+
+Do not simply analyze data.
+
+Help decision-makers choose the best action.
+
+For every recommendation include:
+• Evidence
+• Benefits
+• Risks
+• Trade-offs
+• Alternatives
+• Expected outcomes
+• Confidence level
+
+Always optimize decisions rather than reports.`,
+
+                `Act as an Analytics Quality Assurance Reviewer.
+
+Review every analysis for:
+• Accuracy
+• Logical consistency
+• Statistical validity
+• Business relevance
+• Clarity
+• Reproducibility
+• Bias
+• Missing assumptions
+
+Identify weaknesses and recommend improvements before accepting conclusions.`,
+
+                `Act as an Analytics Research Specialist.
+
+Approach every problem with scientific rigor.
+
+Always:
+• Review the evidence.
+• Compare multiple analytical approaches.
+• Explain strengths and weaknesses.
+• Identify knowledge gaps.
+• Recommend further investigation.
+• Reference established analytical frameworks when appropriate.
+
+Avoid unsupported conclusions and prioritize evidence-based reasoning.`,
+
+                `Act as the Chief Data Officer (CDO) of a global enterprise.
+
+View every problem through the lens of enterprise data strategy.
+
+Consider:
+• Business value
+• Data governance
+• Data quality
+• Security
+• Compliance
+• AI readiness
+• Analytics maturity
+• Data architecture
+• Organizational adoption
+• Long-term scalability
+
+Recommend strategic initiatives that improve how the organization manages and leverages data.
+
+Balance innovation with governance, and short-term wins with long-term sustainability.`
+            ];
+
+            const tagGroups = [
+                ["#analytics", "#business-insights"],
+                ["#bi", "#strategy"],
+                ["#powerbi", "#dax"],
+                ["#sql", "#performance"],
+                ["#python", "#pandas"],
+                ["#datascience", "#ml"],
+                ["#statistics", "#analysis"],
+                ["#excel", "#automation"],
+                ["#executive", "#strategy"],
+                ["#mentorship", "#learning"],
+                ["#consulting", "#strategy"],
+                ["#google", "#quality"],
+                ["#amazon", "#metrics"],
+                ["#netflix", "#product"],
+                ["#finance", "#roi"],
+                ["#marketing", "#roas"],
+                ["#customer", "#clv"],
+                ["#ux", "#dashboard"],
+                ["#governance", "#compliance"],
+                ["#architecture", "#scalability"],
+                ["#ai", "#automation"],
+                ["#leadership", "#fortune500"],
+                ["#deloitte", "#consulting"],
+                ["#storytelling", "#narrative"],
+                ["#kpi", "#strategy"],
+                ["#predictive", "#forecasting"],
+                ["#decision", "#tradeoffs"],
+                ["#quality", "#review"],
+                ["#research", "#evidence"],
+                ["#cdo", "#strategy"]
+            ];
+
+            // ----- RENDER -----
+            const sidebarNav = document.getElementById('sidebarNav');
+            const promptList = document.getElementById('promptList');
+
+            let sidebarHTML = '';
+            let listHTML = '';
+
+            for (let i = 0; i < prompts.length; i++) {
+                const num = i + 1;
+                const title = titles[i];
+                const text = prompts[i];
+                const tags = tagGroups[i] || ['#prompt'];
+
+                // sidebar
+                sidebarHTML += `
+                    <a href="#prompt-${num}" data-index="${i}" class="${i === 0 ? 'active' : ''}">
+                        <span class="num">${String(num).padStart(2, '0')}</span>
+                        <span class="title">${title}</span>
+                        <span class="dot"></span>
+                    </a>
+                `;
+
+                // list
+                const tagHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+                // escape & decorate text
+                let decorated = text
+                    .replace(/•/g, '<span class="bullet">•</span>')
+                    .replace(/Act as/g, '<span class="role">Act as</span>');
+
+                // highlight common keywords
+                const keywords = ['Always', 'Requirements', 'Identify', 'Include', 'Analyze', 'Explain', 'Perform',
+                    'Design', 'Generate', 'Suggest', 'Evaluate', 'Recommend', 'Review', 'Provide',
+                    'Determine', 'Create', 'Investigate', 'Detect', 'Design', 'Turn', 'Prepare',
+                    'Find', 'Score', 'Assess', 'Compare', 'Rank', 'Prioritize', 'Goal', 'Never',
+                    'Focus', 'Every', 'Your', 'Approach', 'Write', 'Use', 'Think', 'Keep'
+                ];
+                const regex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
+                decorated = decorated.replace(regex, '<span class="highlight">$1</span>');
+
+                listHTML += `
+                    <div class="prompt-entry" id="prompt-${num}">
+                        <div class="prompt-number">${String(num).padStart(2, '0')}</div>
+                        <div class="prompt-content">
+                            <div class="header-row">
+                                <h3>${title}</h3>
+                                <div class="tags">${tagHTML}</div>
+                            </div>
+                            <div class="prompt-body-text" data-expanded="false">${decorated}</div>
+                            <div class="prompt-actions">
+                                <button class="copy-btn" data-prompt="prompt-${num}"><i class="fas fa-copy"></i> Copy</button>
+                                <button class="expand-btn" data-target="prompt-${num}">
+                                    <i class="fas fa-chevron-down"></i> <span>Expand</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            sidebarNav.innerHTML = sidebarHTML;
+            promptList.innerHTML = listHTML;
+
+            // ----- SIDEBAR NAV -----
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const target = this.getAttribute('href');
+                    const el = document.querySelector(target);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            });
+
+            // ----- COPY -----
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const targetId = this.getAttribute('data-prompt');
+                    const el = document.getElementById(targetId);
+                    if (!el) return;
+
+                    const bodyEl = el.querySelector('.prompt-body-text') || el;
+                    let text = bodyEl.innerText.trim();
+
+                    navigator.clipboard.writeText(text).then(() => {
+                        const orig = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        this.classList.add('copied');
+                        setTimeout(() => {
+                            this.innerHTML = orig;
+                            this.classList.remove('copied');
+                        }, 2000);
+                    }).catch(() => {
+                        const ta = document.createElement('textarea');
+                        ta.value = text;
+                        document.body.appendChild(ta);
+                        ta.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(ta);
+                        const orig = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        this.classList.add('copied');
+                        setTimeout(() => {
+                            this.innerHTML = orig;
+                            this.classList.remove('copied');
+                        }, 2000);
+                    });
+                });
+            });
+
+            // ----- EXPAND / COLLAPSE -----
+            document.querySelectorAll('.expand-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const entry = document.getElementById(targetId);
+                    if (!entry) return;
+
+                    const body = entry.querySelector('.prompt-body-text');
+                    if (!body) return;
+
+                    const isExpanded = body.dataset.expanded === 'true';
+                    if (isExpanded) {
+                        body.classList.remove('expanded');
+                        body.dataset.expanded = 'false';
+                        this.innerHTML = '<i class="fas fa-chevron-down"></i> <span>Expand</span>';
+                    } else {
+                        body.classList.add('expanded');
+                        body.dataset.expanded = 'true';
+                        this.innerHTML = '<i class="fas fa-chevron-up"></i> <span>Collapse</span>';
+                    }
+                });
+            });
+
+            // ----- SCROLL SPY -----
+            const entries = document.querySelectorAll('.prompt-entry');
+            const links = document.querySelectorAll('.sidebar-nav a');
+
+            const observer = new IntersectionObserver((observed) => {
+                observed.forEach(ob => {
+                    if (ob.isIntersecting) {
+                        const id = ob.target.id;
+                        links.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }, { threshold: 0.35 });
+
+            entries.forEach(entry => observer.observe(entry));
+
+            // total count
+            document.getElementById('totalCount').textContent = prompts.length;
+
+            // if on load, first active
+            setTimeout(() => {
+                const first = document.querySelector('.prompt-entry');
+                if (first) {
+                    const id = first.id;
+                    links.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                    });
+                }
+            }, 100);
+        })();
+    </script>
+</body>
+</html>
