@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>🧠 Advanced Prompt Engineering | Complete AI Guide 2026</title>
+  <link rel="icon" type="image/x-icon" href="logo.png"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #f0f4fc;
+      --bg-secondary: #ffffff;
+      --bg-card: #ffffff;
+      --text-primary: #0b1120;
+      --text-secondary: #4b5563;
+      --accent-blue: #2563eb;
+      --accent-purple: #7c3aed;
+      --accent-cyan: #0891b2;
+      --accent-pink: #db2777;
+      --accent-green: #059669;
+      --accent-orange: #d97706;
+      --border-color: #e2e8f0;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.03);
+      --shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.04);
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Noto Sans Bengali', 'Inter', system-ui, sans-serif;
+      background: var(--bg-primary);
+      background-image: 
+        radial-gradient(ellipse at 15% 15%, rgba(37, 99, 235, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 85%, rgba(124, 58, 237, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(8, 145, 178, 0.02) 0%, transparent 70%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: floatUp linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 2rem 2rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin-bottom: 4rem;
+      animation: slideDown 0.8s ease-out;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 0.5rem 1.8rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      letter-spacing: 0.5px;
+      margin-bottom: 2rem;
+      animation: pulse 2s ease-in-out infinite;
+      box-shadow: var(--shadow-card);
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(8, 145, 178, 0.15); }
+      50% { box-shadow: 0 0 40px rgba(8, 145, 178, 0.25); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #2563eb, #7c3aed, #059669);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+
+    .hero .subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+      font-weight: 400;
+    }
+
+    /* Stats */
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-bottom: 4rem;
+      flex-wrap: wrap;
+      animation: fadeIn 1s ease-out 0.3s both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .stat-item {
+      text-align: center;
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 1.5rem 2.5rem;
+      transition: all 0.3s;
+      box-shadow: var(--shadow-card);
+    }
+
+    .stat-item:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-top: 0.4rem;
+      font-weight: 500;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 60px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 29px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, 
+        var(--accent-blue), var(--accent-purple), var(--accent-cyan), 
+        var(--accent-pink), var(--accent-green), var(--accent-orange),
+        #6366f1, #14b8a6, #f472b6, #a78bfa
+      );
+      border-radius: 10px;
+      animation: growLine 1.5s ease-out;
+    }
+
+    @keyframes growLine {
+      from { transform: scaleY(0); }
+      to { transform: scaleY(1); }
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      animation: fadeSlideIn 0.6s ease-out forwards;
+    }
+
+    .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+    .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+    .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+    .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+    .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+    .timeline-item:nth-child(6) { animation-delay: 0.6s; }
+    .timeline-item:nth-child(7) { animation-delay: 0.7s; }
+    .timeline-item:nth-child(8) { animation-delay: 0.8s; }
+    .timeline-item:nth-child(9) { animation-delay: 0.9s; }
+    .timeline-item:nth-child(10) { animation-delay: 1s; }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -47px;
+      top: 30px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 3px solid;
+      z-index: 2;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .timeline-item:hover .timeline-dot {
+      transform: scale(1.4);
+      box-shadow: 0 0 40px currentColor;
+    }
+
+    .color-1 { border-color: var(--accent-blue); color: var(--accent-blue); }
+    .color-2 { border-color: var(--accent-purple); color: var(--accent-purple); }
+    .color-3 { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+    .color-4 { border-color: var(--accent-pink); color: var(--accent-pink); }
+    .color-5 { border-color: var(--accent-green); color: var(--accent-green); }
+    .color-6 { border-color: var(--accent-orange); color: var(--accent-orange); }
+    .color-7 { border-color: #6366f1; color: #6366f1; }
+    .color-8 { border-color: #14b8a6; color: #14b8a6; }
+    .color-9 { border-color: #f472b6; color: #f472b6; }
+    .color-10 { border-color: #a78bfa; color: #a78bfa; }
+
+    /* Glass Card - Light */
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(25px);
+      border: 1px solid var(--border-color);
+      border-radius: 28px;
+      padding: 2.5rem;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.02) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+
+    .glass-card:hover::before {
+      opacity: 1;
+    }
+
+    .glass-card:hover {
+      border-color: #c8d8f0;
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-5px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .tech-number {
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    .card-title h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+
+    .card-title .eng-sub {
+      font-size: 0.95rem;
+      color: var(--accent-cyan);
+      font-weight: 500;
+    }
+
+    .badge-tag {
+      display: inline-block;
+      background: rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(37, 99, 235, 0.15);
+      color: var(--accent-blue);
+      padding: 0.3rem 1.2rem;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    /* Description */
+    .description {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+      padding: 1rem 1.2rem;
+      background: rgba(0, 0, 0, 0.02);
+      border-radius: 12px;
+    }
+
+    /* Comparison */
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .comparison { grid-template-columns: 1fr; }
+      .timeline { padding-left: 40px; }
+      .glass-card { padding: 1.8rem; }
+    }
+
+    .example-box {
+      padding: 1.5rem;
+      border-radius: 18px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .bad-box {
+      background: rgba(239, 68, 68, 0.05);
+      border: 1px solid rgba(239, 68, 68, 0.15);
+    }
+
+    .good-box {
+      background: rgba(16, 185, 129, 0.05);
+      border: 1px solid rgba(16, 185, 129, 0.15);
+    }
+
+    .example-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .bad-box .example-label { color: #dc2626; }
+    .good-box .example-label { color: #059669; }
+
+    .example-content {
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    .good-box .example-content {
+      color: #065f46;
+    }
+
+    /* Real World Example */
+    .real-world {
+      background: rgba(251, 191, 36, 0.06);
+      border: 1px solid rgba(251, 191, 36, 0.15);
+      border-radius: 16px;
+      padding: 1.2rem 1.5rem;
+      margin: 1.2rem 0;
+    }
+
+    .real-world .rw-title {
+      font-weight: 700;
+      color: #d97706;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .real-world p {
+      color: #78350f;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* Why section - Light */
+    .why-section {
+      background: rgba(124, 58, 237, 0.04);
+      border-left: 3px solid var(--accent-purple);
+      padding: 1rem 1.5rem;
+      border-radius: 0 14px 14px 0;
+      margin-top: 1rem;
+      font-size: 0.92rem;
+      color: #5b21b6;
+      line-height: 1.7;
+    }
+
+    .why-section strong {
+      color: #4c1d95;
+    }
+
+    /* Pro Tip - Light */
+    .pro-tip {
+      background: rgba(8, 145, 178, 0.05);
+      border: 1px dashed rgba(8, 145, 178, 0.2);
+      border-radius: 14px;
+      padding: 1rem 1.3rem;
+      margin-top: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      font-size: 0.88rem;
+      color: #0e7490;
+    }
+
+    .pro-tip i {
+      color: var(--accent-cyan);
+      font-size: 1.1rem;
+      margin-top: 2px;
+    }
+
+    /* Extra grid */
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 5rem 0 2.5rem;
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .extra-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 4rem;
+    }
+
+    .extra-chip {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: default;
+      box-shadow: var(--shadow-card);
+    }
+
+    .extra-chip:hover {
+      border-color: #c8d8f0;
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .extra-chip i {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .extra-chip .chip-name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    .extra-chip .chip-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin-top: 0.4rem;
+    }
+
+    /* Template Section - Light */
+    .template-section {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 28px;
+      padding: 2.5rem;
+      margin: 3rem 0;
+      box-shadow: var(--shadow-card);
+    }
+
+    .template-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .template-code {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      line-height: 1.8;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .template-code .keyword { color: #7c3aed; }
+    .template-code .string { color: #059669; }
+    .template-code .comment { color: #94a3b8; }
+
+    /* Footer - Light */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-top: 3rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .footer strong {
+      color: #d97706;
+    }
+
+    .footer .formula {
+      display: inline-block;
+      background: rgba(251, 191, 36, 0.08);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      padding: 0.5rem 1.5rem;
+      border-radius: 20px;
+      margin-top: 1rem;
+      font-size: 0.88rem;
+      color: #92400e;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="particles" id="particles"></div>
+
+  <div class="container">
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-badge">
+        <i class="fas fa-bolt"></i> Complete Prompt Engineering Guide
+      </div>
+      <h1>10 High-Impact Techniques</h1>
+      <p class="subtitle">
+        Complete AI Prompt Engineering Guide with real-world examples, detailed explanations, and professional tips
+      </p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-number">10</div>
+        <div class="stat-label">Core Techniques</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">7</div>
+        <div class="stat-label">Winning Formula</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Bonus Tips</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Possibilities</div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline" id="timeline"></div>
+
+    <!-- Template -->
+    <div class="template-section">
+      <h2><i class="fas fa-code"></i> একটি শক্তিশালী Prompt Template</h2>
+      <div class="template-code">
+<span class="comment"># Prompt Template</span>
+
+<span class="keyword">Role:</span> <span class="string">Act as a Senior [Profession].</span>
+
+<span class="keyword">Context:</span> <span class="string">[Relevant background information]</span>
+
+<span class="keyword">Objective:</span> <span class="string">[What you want to achieve]</span>
+
+<span class="keyword">Requirements:</span>
+<span class="string">- Requirement 1
+- Requirement 2
+- Requirement 3</span>
+
+<span class="keyword">Constraints:</span>
+<span class="string">- No assumptions
+- Use latest best practices
+- Beginner-friendly explanations
+- Optimize for performance
+- Mention trade-offs where applicable</span>
+
+<span class="keyword">Output Format:</span>
+<span class="string">1. Executive Summary
+2. Detailed Explanation
+3. Step-by-Step Guide
+4. Best Practices
+5. Common Mistakes
+6. Final Recommendations</span>
+
+<span class="keyword">Quality Check:</span>
+<span class="string">- Verify logical consistency
+- Remove repetition
+- Ensure clarity
+- State any assumptions explicitly
+- Identify limitations or uncertainties</span>
+      </div>
+    </div>
+
+    <!-- Extra techniques -->
+    <h2 class="section-title">
+      <i class="fas fa-star"></i> অতিরিক্ত Game-Changer কৌশল
+    </h2>
+    <div class="extra-grid" id="extraGrid"></div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>🎯 সবচেয়ে কার্যকর প্রম্পটের <strong>৭টি উপাদান</strong></p>
+      <div class="formula">
+        Role • Context • Objective • Requirements • Constraints • Output Format • Quality Check
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // ---------- EXTENDED DATA with real-world examples ----------
+      const techniques = [
+        {
+          id: 1,
+          colorClass: 'color-1',
+          title: 'Role Assignment',
+          engSub: 'AI-কে নির্দিষ্ট বিশেষজ্ঞ বানান',
+          badge: 'Persona',
+          description: 'AI মডেলকে একটি নির্দিষ্ট ভূমিকা বা persona অ্যাসাইন করলে সে সেই প্রফেশনালের জ্ঞান, অভিজ্ঞতা ও দৃষ্টিকোণ থেকে উত্তর দেয়। এটি সবচেয়ে সহজ কিন্তু সবচেয়ে কার্যকরী টেকনিক।',
+          bad: 'Explain Power BI.',
+          good: 'Act as a Senior Microsoft Certified Power BI Consultant with 15 years of enterprise BI experience.',
+          realWorld: 'একটি SaaS কোম্পানি তাদের কাস্টমার সাপোর্ট চ্যাটবটে "তুমি একজন অভিজ্ঞ কাস্টমার সাকসেস ম্যানেজার" রোল দিয়ে দেখেছে গ্রাহক সন্তুষ্টি ৩৫% বৃদ্ধি পেয়েছে। কারণ বট তখন শুধু তথ্য দেয়নি, বরং এম্পেথি ও স্ট্র্যাটেজিক সাজেশন দিয়েছে।',
+          why: 'AI মডেল বিভিন্ন ডোমেইনের ট্রেনিং ডেটা থেকে শিখেছে। নির্দিষ্ট রোল দিলে সে তার নিউরাল নেটওয়ার্কে সেই ডোমেইন-স্পেসিফিক প্যাটার্ন অ্যাক্টিভেট করে, জেনেরিক উত্তর এড়ায়।',
+          proTip: 'রোল যত নির্দিষ্ট হবে, আউটপুট তত ভালো। "Software Developer" না বলে "Senior React Developer with TypeScript expertise" বলুন।'
+        },
+        {
+          id: 2,
+          colorClass: 'color-2',
+          title: 'Context is King',
+          engSub: 'যত বেশি Context, তত ভালো Result',
+          badge: 'Background',
+          description: 'AI-কে সম্পূর্ণ কনটেক্সট বা প্রাসঙ্গিক তথ্য দিলে সে পরিস্থিতি অনুযায়ী সঠিক সিদ্ধান্ত নিতে পারে। কনটেক্সট হলো ডেটা, অডিয়েন্স, ইন্ডাস্ট্রি, লোকেশন, টাইম পিরিয়ড — সবকিছু।',
+          bad: 'Create dashboard.',
+          good: 'I have sales data from 2022-2025. Audience: CEO. Industry: E-commerce. Goal: Find revenue growth and customer trends.',
+          realWorld: 'একটি ফিনটেক স্টার্টআপ যখন শুধু "create a fraud detection model" প্রম্পট দিয়েছিল, আউটপুট খুব জেনেরিক ছিল। কিন্তু যখন যোগ করলো "আমাদের ৫ মিলিয়ন ট্রানজেকশন আছে, ৭০% মোবাইল, এশিয়ান মার্কেট, real-time detection দরকার" — তখন মডেল স্পেসিফিক আর্কিটেকচার সাজেস্ট করলো যা ৯৭% অ্যাকুরেসি দিয়েছে।',
+          why: 'LLM-এর attention mechanism ইনপুট টোকেনগুলোর মধ্যে সম্পর্ক বিশ্লেষণ করে। পর্যাপ্ত কনটেক্সট দিলে মডেল সঠিক টোকেনে বেশি attention weight দিতে পারে।',
+          proTip: '5W1H ফ্রেমওয়ার্ক ব্যবহার করুন: Who, What, When, Where, Why, How — প্রতিটির উত্তর কনটেক্সটে দিন।'
+        },
+        {
+          id: 3,
+          colorClass: 'color-3',
+          title: 'Tell AI the Goal',
+          engSub: 'শেষ লক্ষ্যটা পরিষ্কার করে বলুন',
+          badge: 'Objective',
+          description: 'প্রম্পটের শুরুতে বা শেষে স্পষ্টভাবে জানিয়ে দিন আপনি কী অর্জন করতে চান। গোল-ওরিয়েন্টেড প্রম্পটিং AI-কে focused রাখে এবং irrelevant তথ্য ফিল্টার করতে সাহায্য করে।',
+          bad: 'Make a report.',
+          good: 'My goal is to create a professional dashboard for executives that supports strategic decision making.',
+          realWorld: 'একটি মার্কেটিং এজেন্সি তাদের কন্টেন্ট রাইটার AI-কে বলেছিল "Write 10 blog topics"। রেজাল্ট random ছিল। যখন বললো "Goal: Generate blog topics that increase organic traffic by targeting long-tail keywords with low competition in the SaaS niche" — ১০টির মধ্যে ৮টি টপিক পরবর্তী ৩ মাসে page-1 ranking পেয়েছে।',
+          why: 'Goal-driven prompting AI-কে output-এর success criteria বুঝতে সাহায্য করে, ফলে সে সেই ক্রাইটেরিয়া মেট করার জন্য সবচেয়ে কার্যকরী পাথ বেছে নেয়।',
+          proTip: 'SMART goal framework ব্যবহার করুন: Specific, Measurable, Achievable, Relevant, Time-bound।'
+        },
+        {
+          id: 4,
+          colorClass: 'color-4',
+          title: 'Define Output Format',
+          engSub: 'আউটপুটের ধরন ঠিক করে দিন',
+          badge: 'Structure',
+          description: 'AI-কে নির্দিষ্ট ফরম্যাটে আউটপুট দিতে বললে তা সরাসরি ব্যবহারযোগ্য হয়। এটি JSON, Markdown, HTML, CSV, Table, বা যেকোনো স্ট্রাকচার্ড ফরম্যাট হতে পারে।',
+          bad: 'Explain this.',
+          good: 'Return the answer in Markdown with the following sections: Summary, Key Features, Pros & Cons, Implementation Guide, and Common Pitfalls.',
+          realWorld: 'একটি DevOps টিম ChatGPT-কে JSON ফরম্যাটে Terraform কনফিগারেশন জেনারেট করতে বলে CI/CD পাইপলাইনে অটোমেটেড করে ফেলেছে। আগে ম্যানুয়ালি লিখতে ৪ ঘন্টা লাগতো, এখন ২ মিনিটে হয়ে যায় এবং directly deploy করা যায়।',
+          why: 'Structured output ডাউনস্ট্রিম সিস্টেমে ইন্টিগ্রেশন সহজ করে। LLM গুলো বিশেষভাবে JSON, XML, Markdown ফরম্যাটে আউটপুট দিতে অপ্টিমাইজড।',
+          proTip: 'API integration-এর জন্য always JSON চাইবেন। স্কিমা example দিয়ে দিন: {"name": "string", "price": "number"}।'
+        },
+        {
+          id: 5,
+          colorClass: 'color-5',
+          title: 'Add Constraints',
+          engSub: 'সীমাবদ্ধতা ও বাউন্ডারি সেট করুন',
+          badge: 'Boundaries',
+          description: 'কনস্ট্রেইন্ট বা সীমাবদ্ধতা দিলে AI-এর আউটপুট ফোকাসড, নির্ভুল ও প্রয়োজনীয় হয়। এতে অপ্রয়োজনীয় তথ্য বা ভুল অনুমান কমে যায়।',
+          bad: 'Write about machine learning.',
+          good: 'Maximum 500 words. No emojis. Beginner friendly. Professional tone. Use latest best practices. Cite limitations when uncertain. Don\'t assume missing information.',
+          realWorld: 'একটি legal tech কোম্পানি contract summary জেনারেট করার সময় constraints দেয়: "150 words max, plain English, no legal jargon, highlight 3 key risks, use bullet points only"। এর ফলে lawyers-দের review time ৬০% কমে গেছে এবং non-legal stakeholders সহজে বুঝতে পারে।',
+          why: 'Constraints মডেলের output distribution-কে সংকুচিত করে। Token-level sampling-এ এটি high-probability কিন্তু irrelevant tokens বাদ দেয়।',
+          proTip: 'Negative constraints-এর বদলে positive constraints বেশি কার্যকর। "Don\'t use jargon" না বলে "Use plain, simple English" বলুন।'
+        },
+        {
+          id: 6,
+          colorClass: 'color-6',
+          title: 'Few-Shot Prompting',
+          engSub: 'উদাহরণ দিয়ে শিখিয়ে নিন',
+          badge: 'Examples',
+          description: 'প্রম্পটের মধ্যে কয়েকটি উদাহরণ (input-output pair) দিলে AI প্যাটার্ন বুঝতে পারে এবং একই স্টাইলে নতুন ইনপুটের জন্য আউটপুট জেনারেট করে। এটি in-context learning-এর একটি ফর্ম।',
+          bad: 'Analyze sentiment of reviews.',
+          good: 'Review: "Product is amazing!" → Sentiment: Positive (Confidence: 0.95)\nReview: "Worst purchase ever." → Sentiment: Negative (Confidence: 0.98)\nReview: "It\'s okay, nothing special." → Sentiment: Neutral (Confidence: 0.72)\n\nNow analyze: "Delivery was fast but packaging was damaged."',
+          realWorld: 'একটি ই-কমার্স কোম্পানি ৩টি example দিয়ে হাজার হাজার প্রোডাক্ট রিভিউ ক্লাসিফাই করেছে। ম্যানুয়াল labeling-এর তুলনায় ৯২% accuracy পেয়েছে, যেখানে zero-shot prompting-এ accuracy ছিল মাত্র ৬৮%।',
+          why: 'Few-shot examples মডেলের attention layer-এ pattern-matching mechanism trigger করে। এটি token prediction distribution-কে desired pattern-এর দিকে bias করে।',
+          proTip: '৩-৫টি diverse example দিন। Edge case ও common case দুটোই কভার করুন। Examples গুলো consistent format-এ রাখুন।'
+        },
+        {
+          id: 7,
+          colorClass: 'color-7',
+          title: 'Chain-of-Tasks',
+          engSub: 'একসাথে নয়, ধাপে ধাপে ভাগ করুন',
+          badge: 'Sequential',
+          description: 'জটিল কাজকে ছোট ছোট স্টেপে ভাগ করলে AI প্রতিটি স্টেপে focus করতে পারে। এতে ভুল কম হয় এবং কোয়ালিটি উন্নত হয়। এটি chain-of-thought prompting-এর extended version।',
+          bad: 'Build an entire website.',
+          good: 'Step 1: Analyse requirements. → Step 2: Design UI. → Step 3: Create HTML. → Step 4: Create CSS. → Step 5: Create JavaScript. → Step 6: Optimize.',
+          realWorld: 'একটি সফটওয়্যার কনসালটেন্সি ফার্ম complex migration project-এ chain-of-task ব্যবহার করে: প্রথমে current system analyze, তারপর migration plan, তারপর script generation, তারপর testing strategy — এভাবে ১২টি স্টেপে ভাগ করে। আগে যেখানে migration-এ ৩০% failure rate ছিল, এখন ৫%-এর নিচে নেমে এসেছে।',
+          why: 'Sequential task decomposition মডেলের intermediate computation steps কে explicit করে। এতে error propagation কমে এবং প্রতিটি স্টেপ independently verify করা যায়।',
+          proTip: 'প্রতিটি স্টেপের পরে "Confirm before proceeding" অ্যাড করুন। এতে ভুল中途 correction করা যায়।'
+        },
+        {
+          id: 8,
+          colorClass: 'color-8',
+          title: 'Define Evaluation Criteria',
+          engSub: 'AI-কে নিজের উত্তর যাচাই করতে বলুন',
+          badge: 'Self-Check',
+          description: 'AI-কে আউটপুট জেনারেট করার পরে নির্দিষ্ট ক্রাইটেরিয়ার ভিত্তিতে self-evaluate করতে বলুন। এটি "constitutional AI" বা "self-reflection" টেকনিকের অংশ।',
+          bad: 'Write an article about climate change.',
+          good: 'Before returning the final answer:\n1. Check for logical errors.\n2. Remove repetition.\n3. Improve readability.\n4. Verify consistency.\n5. Ensure best practices are followed.\n6. Fact-check all statistics.',
+          realWorld: 'একটি নিউজ অর্গানাইজেশন AI-generated articles প্রকাশের আগে ৬-পয়েন্ট self-evaluation criteria ব্যবহার করে। result: fact-checking errors ৭৮% কমেছে, readability score ৪০% বেড়েছে, এবং editorial review time অর্ধেকে নেমেছে।',
+          why: 'Self-evaluation মডেলের output distribution থেকে low-quality samples filter করে। এটি multiple sampling paths explore করে সবচেয়ে consistent ও accurate path select করে।',
+          proTip: 'Criteria গুলো measurable রাখুন: "Check if word count is under 300", "Verify all claims have citations" ইত্যাদি।'
+        },
+        {
+          id: 9,
+          colorClass: 'color-9',
+          title: 'Think Like Multiple Experts',
+          engSub: 'একাধিক বিশেষজ্ঞের দৃষ্টিভঙ্গি নিন',
+          badge: 'Multi-Angle',
+          description: 'একটি সমস্যাকে বিভিন্ন বিশেষজ্ঞের দৃষ্টিকোণ থেকে বিশ্লেষণ করতে বলুন। তারপর সবগুলো perspective synthesize করে একটি comprehensive solution তৈরি করুন।',
+          bad: 'Review this code.',
+          good: 'Think like: Senior Data Analyst, UX Designer, Business Consultant, Python Engineer, Technical Writer — analyze the problem from each perspective, then synthesize into one comprehensive answer.',
+          realWorld: 'একটি হেলথটেক কোম্পানি patient portal redesign-এর জন্য multi-expert approach ব্যবহার করেছে: UX Designer (usability), Security Expert (HIPAA compliance), Data Analyst (analytics), Physician (clinical workflow), Patient Advocate (accessibility)। ফলাফল: adoption rate ৪৫% থেকে ৮২% বেড়েছে।',
+          why: 'Multi-perspective analysis মডেলের বিভিন্ন knowledge subspace activate করে। এটি diverse token sampling paths generate করে, যা পরে synthesize করলে richer output পাওয়া যায়।',
+          proTip: 'প্রতিটি expert-এর জন্য specific instruction দিন: "As a Security Expert, focus on OWASP Top 10 vulnerabilities" ইত্যাদি।'
+        },
+        {
+          id: 10,
+          colorClass: 'color-10',
+          title: 'Iterative Prompting',
+          engSub: 'একবারেই নিখুঁত আশা করবেন না',
+          badge: 'Refinement',
+          description: 'প্রথম প্রম্পটে নিখুঁত উত্তর আশা না করে iterative process ফলো করুন। প্রথমে rough draft নিন, তারপর feedback দিয়ে refine করুন, প্রয়োজন অনুযায়ী repeat করুন। এটি human-AI collaboration-এর best practice।',
+          bad: 'Perfect answer in one go.',
+          good: 'Step 1: First draft → Step 2: Identify weaknesses → Step 3: Provide specific improvement instructions → Step 4: More specific refinements → Step 5: Final polish.',
+          realWorld: 'OpenAI-এর research shows যে iterative prompting (3-4 rounds) single-prompt approach-এর তুলনায় output quality-তে ৪০-৬০% improvement আনে। GPT-4 নিজেও training-এর সময় iterative refinement ব্যবহার করেছে।',
+          why: 'Iterative refinement মডেলকে previous output-এর error gradient ধরে correction করতে দেয়। প্রতিটি iteration-এ attention weights adjust হয়ে আরও accurate output produce করে।',
+          proTip: 'প্রতিটি iteration-এ specific feedback দিন। "Make it better" না বলে "The second paragraph needs more statistical evidence and a real-world example" বলুন।'
+        }
+      ];
+
+      const extraTechniques = [
+        { icon: 'fa-user-tie', color: '#2563eb', name: 'Persona Prompting', desc: 'নির্দিষ্ট ভূমিকায় কাজ করান' },
+        { icon: 'fa-code', color: '#7c3aed', name: 'Delimiter ব্যবহার', desc: '""" ```, &lt;context&gt; দিয়ে আলাদা করুন' },
+        { icon: 'fa-check-circle', color: '#059669', name: 'Positive নির্দেশনা', desc: 'কী করতে হবে বলুন, কী নয় তা নয়' },
+        { icon: 'fa-question-circle', color: '#d97706', name: 'Ask for Assumptions', desc: 'AI-কে অনুমানগুলো আলাদা করে লিখতে বলুন' },
+        { icon: 'fa-comments', color: '#0891b2', name: 'Clarifying Questions', desc: 'তথ্য কম থাকলে প্রশ্ন করতে বলুন' },
+        { icon: 'fa-table-list', color: '#db2777', name: 'Rubric-based Prompting', desc: 'নির্দিষ্ট মানদণ্ড অনুযায়ী মূল্যায়ন' },
+        { icon: 'fa-users', color: '#6366f1', name: 'Audience Specification', desc: 'CEO/Beginner/Developer অনুযায়ী ভাষা' },
+        { icon: 'fa-pen-to-square', color: '#14b8a6', name: 'Self-Revision', desc: 'প্রথম খসড়ার পর নিজেই উন্নত করান' },
+        { icon: 'fa-scale-balanced', color: '#f472b6', name: 'Compare Alternatives', desc: 'একাধিক সমাধানের সুবিধা-অসুবিধা তুলনা' },
+        { icon: 'fa-bullseye', color: '#f59e0b', name: 'Success Criteria', desc: '"সফল উত্তর"-এর সংজ্ঞা নির্ধারণ' }
+      ];
+
+      // ---------- RENDER TIMELINE ----------
+      const timeline = document.getElementById('timeline');
+      timeline.innerHTML = techniques.map(t => `
+        <div class="timeline-item">
+          <div class="timeline-dot ${t.colorClass}">${t.id}</div>
+          <div class="glass-card">
+            <div class="card-header">
+              <div class="tech-number">${String(t.id).padStart(2, '0')}</div>
+              <div class="card-title">
+                <h3>${t.id}. ${t.title}</h3>
+                <span class="eng-sub">${t.engSub}</span>
+              </div>
+              <span class="badge-tag">${t.badge}</span>
+            </div>
+
+            <div class="description">
+              ${t.description}
+            </div>
+
+            <div class="comparison">
+              <div class="example-box bad-box">
+                <div class="example-label">
+                  <i class="fas fa-times-circle"></i> খারাপ উদাহরণ
+                </div>
+                <div class="example-content">${t.bad}</div>
+              </div>
+              <div class="example-box good-box">
+                <div class="example-label">
+                  <i class="fas fa-check-circle"></i> ভালো উদাহরণ
+                </div>
+                <div class="example-content">${t.good}</div>
+              </div>
+            </div>
+
+            <div class="real-world">
+              <div class="rw-title">
+                <i class="fas fa-globe"></i> বাস্তব জীবনের উদাহরণ
+              </div>
+              <p>${t.realWorld}</p>
+            </div>
+
+            <div class="why-section">
+              <i class="fas fa-lightbulb" style="margin-right: 0.5rem;"></i>
+              <strong>কেন কাজ করে:</strong> ${t.why}
+            </div>
+
+            <div class="pro-tip">
+              <i class="fas fa-rocket"></i>
+              <span><strong>Pro Tip:</strong> ${t.proTip}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // ---------- RENDER EXTRA GRID ----------
+      const extraGrid = document.getElementById('extraGrid');
+      extraGrid.innerHTML = extraTechniques.map(item => `
+        <div class="extra-chip">
+          <i class="fas ${item.icon}" style="color: ${item.color};"></i>
+          <div class="chip-name">${item.name}</div>
+          <div class="chip-desc">${item.desc}</div>
+        </div>
+      `).join('');
+
+      // ---------- PARTICLES ----------
+      const particlesContainer = document.getElementById('particles');
+      const colors = ['#2563eb', '#7c3aed', '#0891b2', '#db2777', '#059669', '#d97706'];
+      for (let i = 0; i < 35; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        const size = Math.random() * 4 + 2;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDuration = Math.random() * 12 + 8 + 's';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particlesContainer.appendChild(particle);
+      }
+    })();
+  </script>
+</body>
+</html>
