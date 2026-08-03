@@ -1,1425 +1,1505 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <link rel="icon" type="image/x-icon" href="logo.png"> 
-  <title>🧠 AI Prompt Reference · 50 Prompts</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Prompt Reference · Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    :root {
-      --bg-primary: #0a0e17;
-      --bg-secondary: #111827;
-      --bg-card: #1a1f2e;
-      --text-primary: #e2e8f0;
-      --text-secondary: #94a3b8;
-      --accent-blue: #3b82f6;
-      --accent-purple: #8b5cf6;
-      --accent-cyan: #06b6d4;
-      --accent-pink: #ec4899;
-      --accent-green: #10b981;
-      --accent-orange: #f59e0b;
-      --border-color: #2d3548;
-      --glass-bg: rgba(26, 31, 46, 0.75);
-    }
+        :root {
+            --bg-base: #f6f9fc;
+            --bg-surface: #ffffff;
+            --bg-sidebar: #0b1120;
+            --text-primary: #0b1120;
+            --text-secondary: #4b5563;
+            --text-muted: #9ca3af;
+            --border-light: #e5e9f0;
+            --border-focus: #d1d9e6;
+            --accent: #2563eb;
+            --accent-light: #dbeafe;
+            --accent-glow: rgba(37, 99, 235, 0.08);
+            --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
+            --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.03);
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --transition: 0.2s ease;
+        }
 
-    body {
-      font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
-      background: var(--bg-primary);
-      background-image: 
-        radial-gradient(ellipse at 15% 15%, rgba(59,130,246,0.06) 0%, transparent 50%),
-        radial-gradient(ellipse at 85% 85%, rgba(139,92,246,0.06) 0%, transparent 50%);
-      color: var(--text-primary);
-      min-height: 100vh;
-      padding: 2.5rem 1.5rem 4rem;
-      line-height: 1.6;
-    }
+        body {
+            font-family: var(--font);
+            background: var(--bg-base);
+            color: var(--text-primary);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
+        /* ----- SIDEBAR ----- */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-sidebar);
+            color: #e2e8f0;
+            padding: 2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            flex-shrink: 0;
+            border-right: 1px solid #1e2a3a;
+            z-index: 10;
+        }
 
-    .header {
-      text-align: center;
-      margin-bottom: 3.5rem;
-    }
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #2d3a4e;
+            border-radius: 8px;
+        }
 
-    .header h1 {
-      font-size: 2.8rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #60a5fa, #a78bfa, #34d399);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -0.5px;
-    }
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-bottom: 1.8rem;
+            border-bottom: 1px solid #1e2a3a;
+            margin-bottom: 1.8rem;
+        }
 
-    .header .sub {
-      color: var(--text-secondary);
-      font-size: 1.1rem;
-      margin-top: 0.5rem;
-    }
+        .sidebar-brand .icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #fff;
+        }
 
-    .header .badge {
-      display: inline-block;
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border-color);
-      border-radius: 60px;
-      padding: 0.3rem 1.8rem;
-      font-size: 0.85rem;
-      color: var(--accent-cyan);
-      margin-bottom: 1rem;
-    }
+        .sidebar-brand h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+        .sidebar-brand h1 span {
+            color: var(--accent);
+        }
+        .sidebar-brand .sub {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-top: 1px;
+        }
 
-    .timeline {
-      position: relative;
-      padding-left: 60px;
-    }
+        .sidebar-nav {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
 
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 29px;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: linear-gradient(180deg, 
-        var(--accent-blue), var(--accent-purple), var(--accent-cyan), 
-        var(--accent-green), var(--accent-orange), var(--accent-pink),
-        #6366f1, #14b8a6, #f472b6, #a78bfa
-      );
-      border-radius: 10px;
-      animation: growLine 1.2s ease-out;
-    }
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: var(--radius-sm);
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 450;
+            transition: var(--transition);
+            cursor: pointer;
+        }
 
-    @keyframes growLine {
-      from { transform: scaleY(0); }
-      to { transform: scaleY(1); }
-    }
+        .sidebar-nav a .num {
+            font-size: 0.65rem;
+            font-weight: 600;
+            opacity: 0.4;
+            min-width: 26px;
+            color: #94a3b8;
+        }
 
-    .timeline-item {
-      position: relative;
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeSlideIn 0.5s ease-out forwards;
-    }
+        .sidebar-nav a .title {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-    .timeline-item:nth-child(1) { animation-delay: 0.05s; }
-    .timeline-item:nth-child(2) { animation-delay: 0.1s; }
-    .timeline-item:nth-child(3) { animation-delay: 0.15s; }
-    .timeline-item:nth-child(4) { animation-delay: 0.2s; }
-    .timeline-item:nth-child(5) { animation-delay: 0.25s; }
-    .timeline-item:nth-child(6) { animation-delay: 0.3s; }
-    .timeline-item:nth-child(7) { animation-delay: 0.35s; }
-    .timeline-item:nth-child(8) { animation-delay: 0.4s; }
-    .timeline-item:nth-child(9) { animation-delay: 0.45s; }
-    .timeline-item:nth-child(10) { animation-delay: 0.5s; }
-    .timeline-item:nth-child(11) { animation-delay: 0.55s; }
-    .timeline-item:nth-child(12) { animation-delay: 0.6s; }
-    .timeline-item:nth-child(13) { animation-delay: 0.65s; }
-    .timeline-item:nth-child(14) { animation-delay: 0.7s; }
-    .timeline-item:nth-child(15) { animation-delay: 0.75s; }
-    .timeline-item:nth-child(16) { animation-delay: 0.8s; }
-    .timeline-item:nth-child(17) { animation-delay: 0.85s; }
-    .timeline-item:nth-child(18) { animation-delay: 0.9s; }
-    .timeline-item:nth-child(19) { animation-delay: 0.95s; }
-    .timeline-item:nth-child(20) { animation-delay: 1.0s; }
-    .timeline-item:nth-child(21) { animation-delay: 1.05s; }
-    .timeline-item:nth-child(22) { animation-delay: 1.1s; }
-    .timeline-item:nth-child(23) { animation-delay: 1.15s; }
-    .timeline-item:nth-child(24) { animation-delay: 1.2s; }
-    .timeline-item:nth-child(25) { animation-delay: 1.25s; }
-    .timeline-item:nth-child(26) { animation-delay: 1.3s; }
-    .timeline-item:nth-child(27) { animation-delay: 1.35s; }
-    .timeline-item:nth-child(28) { animation-delay: 1.4s; }
-    .timeline-item:nth-child(29) { animation-delay: 1.45s; }
-    .timeline-item:nth-child(30) { animation-delay: 1.5s; }
-    .timeline-item:nth-child(31) { animation-delay: 1.55s; }
-    .timeline-item:nth-child(32) { animation-delay: 1.6s; }
-    .timeline-item:nth-child(33) { animation-delay: 1.65s; }
-    .timeline-item:nth-child(34) { animation-delay: 1.7s; }
-    .timeline-item:nth-child(35) { animation-delay: 1.75s; }
-    .timeline-item:nth-child(36) { animation-delay: 1.8s; }
-    .timeline-item:nth-child(37) { animation-delay: 1.85s; }
-    .timeline-item:nth-child(38) { animation-delay: 1.9s; }
-    .timeline-item:nth-child(39) { animation-delay: 1.95s; }
-    .timeline-item:nth-child(40) { animation-delay: 2.0s; }
-    .timeline-item:nth-child(41) { animation-delay: 2.05s; }
-    .timeline-item:nth-child(42) { animation-delay: 2.1s; }
-    .timeline-item:nth-child(43) { animation-delay: 2.15s; }
-    .timeline-item:nth-child(44) { animation-delay: 2.2s; }
-    .timeline-item:nth-child(45) { animation-delay: 2.25s; }
-    .timeline-item:nth-child(46) { animation-delay: 2.3s; }
-    .timeline-item:nth-child(47) { animation-delay: 2.35s; }
-    .timeline-item:nth-child(48) { animation-delay: 2.4s; }
-    .timeline-item:nth-child(49) { animation-delay: 2.45s; }
-    .timeline-item:nth-child(50) { animation-delay: 2.5s; }
+        .sidebar-nav a .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #2d3a4e;
+            transition: var(--transition);
+        }
 
-    @keyframes fadeSlideIn {
-      from { opacity: 0; transform: translateX(-20px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
+        .sidebar-nav a:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: #f1f5f9;
+        }
 
-    .timeline-dot {
-      position: absolute;
-      left: -47px;
-      top: 28px;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--bg-card);
-      border: 3px solid var(--accent-blue);
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 800;
-      color: var(--accent-blue);
-      transition: all 0.3s ease;
-      box-shadow: 0 0 20px rgba(0,0,0,0.6);
-    }
+        .sidebar-nav a.active {
+            background: rgba(37, 99, 235, 0.12);
+            color: #fff;
+        }
+        .sidebar-nav a.active .dot {
+            background: var(--accent);
+            box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
+        }
+        .sidebar-nav a.active .num {
+            opacity: 0.8;
+            color: #fff;
+        }
 
-    .timeline-item:hover .timeline-dot {
-      transform: scale(1.3);
-      box-shadow: 0 0 40px rgba(59,130,246,0.3);
-    }
+        .sidebar-footer {
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #1e2a3a;
+            font-size: 0.75rem;
+            color: #64748b;
+            text-align: center;
+        }
+        .sidebar-footer strong {
+            color: #fbbf24;
+        }
 
-    .glass-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(24px);
-      border: 1px solid var(--border-color);
-      border-radius: 28px;
-      padding: 1.8rem 2.2rem;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative;
-      overflow: hidden;
-    }
+        /* ----- MAIN ----- */
+        .main {
+            flex: 1;
+            padding: 2.5rem 3rem 4rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
 
-    .glass-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.4s;
-      pointer-events: none;
-    }
+        .main-header {
+            margin-bottom: 2.5rem;
+        }
 
-    .glass-card:hover::before {
-      opacity: 1;
-    }
+        .main-header .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
-    .glass-card:hover {
-      border-color: rgba(255,255,255,0.15);
-      box-shadow: 0 25px 60px rgba(0,0,0,0.5);
-      transform: translateY(-4px);
-    }
+        .main-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .main-header .sub {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 2px;
+        }
 
-    .card-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 1.2rem;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-    }
+        .main-header .badge-count {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 40px;
+            padding: 0.35rem 1.4rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            box-shadow: var(--shadow-card);
+        }
+        .main-header .badge-count strong {
+            color: var(--text-primary);
+        }
 
-    .card-title {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
+        /* ----- PROMPT LIST (modern, card-free) ----- */
+        .prompt-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
 
-    .card-title .num {
-      font-size: 2.2rem;
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      opacity: 0.4;
-      line-height: 1;
-    }
+        .prompt-entry {
+            display: flex;
+            align-items: stretch;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+        }
 
-    .card-title h2 {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #f1f5f9;
-    }
+        .prompt-entry:hover {
+            border-color: var(--border-focus);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-1px);
+        }
 
-    .card-title .sub {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      font-weight: 400;
-      display: block;
-      margin-top: 0.1rem;
-    }
+        .prompt-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 56px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: #fafcff;
+            border-right: 1px solid var(--border-light);
+            flex-shrink: 0;
+            letter-spacing: 0.3px;
+        }
 
-    .copy-btn {
-      background: rgba(59,130,246,0.06);
-      border: 1px solid rgba(59,130,246,0.2);
-      border-radius: 40px;
-      padding: 0.4rem 1.4rem;
-      color: #93c5fd;
-      font-size: 0.85rem;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      flex-shrink: 0;
-    }
+        .prompt-content {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
 
-    .copy-btn i {
-      font-size: 0.9rem;
-      color: var(--accent-blue);
-    }
+        .prompt-content .header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
 
-    .copy-btn:hover {
-      background: rgba(59,130,246,0.15);
-      border-color: rgba(59,130,246,0.4);
-      transform: scale(1.02);
-    }
+        .prompt-content .header-row h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
 
-    .copy-btn.copied {
-      background: rgba(16,185,129,0.15);
-      border-color: rgba(16,185,129,0.3);
-      color: #6ee7b7;
-    }
+        .prompt-content .header-row .tags {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
 
-    .copy-btn.copied i {
-      color: var(--accent-green);
-    }
+        .prompt-content .header-row .tags .tag {
+            background: var(--bg-base);
+            border: 1px solid var(--border-light);
+            border-radius: 30px;
+            padding: 0.1rem 0.8rem;
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 0.2px;
+        }
 
-    .prompt-body {
-      background: rgba(0,0,0,0.25);
-      border-radius: 16px;
-      padding: 1.2rem 1.5rem;
-      border: 1px solid rgba(255,255,255,0.04);
-      font-family: 'JetBrains Mono', 'Fira Code', monospace;
-      font-size: 0.82rem;
-      line-height: 1.7;
-      white-space: pre-wrap;
-      word-break: break-word;
-      color: #d1d9e8;
-      max-height: 500px;
-      overflow-y: auto;
-    }
+        .prompt-body-text {
+            font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.7;
+            color: #1e293b;
+            background: #fafcff;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            padding: 0.8rem 1rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 120px;
+            overflow-y: auto;
+            transition: max-height 0.25s ease;
+        }
 
-    .prompt-body::-webkit-scrollbar {
-      width: 4px;
-    }
-    .prompt-body::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.02);
-    }
-    .prompt-body::-webkit-scrollbar-thumb {
-      background: var(--border-color);
-      border-radius: 10px;
-    }
+        .prompt-body-text.expanded {
+            max-height: 800px;
+        }
 
-    .prompt-body .role {
-      color: #c084fc;
-      font-weight: 600;
-    }
+        .prompt-body-text::-webkit-scrollbar {
+            width: 3px;
+        }
+        .prompt-body-text::-webkit-scrollbar-thumb {
+            background: var(--border-focus);
+            border-radius: 8px;
+        }
 
-    .prompt-body .bullet {
-      color: #34d399;
-    }
+        .prompt-body-text .role {
+            color: #7c3aed;
+            font-weight: 600;
+        }
+        .prompt-body-text .bullet {
+            color: #059669;
+        }
+        .prompt-body-text .highlight {
+            color: #b45309;
+            font-weight: 500;
+        }
 
-    .prompt-body .highlight {
-      color: #fbbf24;
-    }
+        .prompt-actions {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: 0.2rem;
+        }
 
-    .prompt-body .comment {
-      color: #64748b;
-      font-style: italic;
-    }
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--border-light);
+            border-radius: 30px;
+            padding: 0.2rem 1.2rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
 
-    .card-footer {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 1rem;
-      padding-top: 0.8rem;
-      border-top: 1px solid rgba(255,255,255,0.04);
-    }
+        .copy-btn i {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
 
-    .tag {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border-color);
-      border-radius: 40px;
-      padding: 0.2rem 1rem;
-      font-size: 0.7rem;
-      color: var(--text-secondary);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
+        .copy-btn:hover {
+            background: var(--accent-light);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .copy-btn:hover i {
+            color: var(--accent);
+        }
 
-    .tag i {
-      font-size: 0.6rem;
-      color: var(--accent-cyan);
-    }
+        .copy-btn.copied {
+            background: #ecfdf5;
+            border-color: #34d399;
+            color: #065f46;
+        }
+        .copy-btn.copied i {
+            color: #34d399;
+        }
 
-    .footer-note {
-      margin-top: 3.5rem;
-      text-align: center;
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-      border-top: 1px solid var(--border-color);
-      padding-top: 2rem;
-    }
+        .expand-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            cursor: pointer;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
 
-    .footer-note strong {
-      color: #fbbf24;
-    }
+        .expand-btn:hover {
+            background: var(--bg-base);
+            color: var(--text-primary);
+        }
 
-    .formula {
-      display: inline-block;
-      background: rgba(251,191,36,0.06);
-      border: 1px solid rgba(251,191,36,0.15);
-      padding: 0.3rem 1.5rem;
-      border-radius: 40px;
-      font-size: 0.8rem;
-      color: #fcd34d;
-      margin-top: 0.5rem;
-    }
+        /* ----- responsive ----- */
+        @media (max-width: 820px) {
+            .sidebar {
+                width: 220px;
+                padding: 1.2rem 0.8rem;
+            }
+            .main {
+                padding: 1.5rem 1.2rem;
+            }
+            .prompt-content {
+                padding: 0.8rem 1rem;
+            }
+            .prompt-number {
+                min-width: 44px;
+                font-size: 0.7rem;
+            }
+        }
 
-    .particles {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
+        @media (max-width: 640px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1rem;
+                border-right: none;
+                border-bottom: 1px solid #1e2a3a;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 0.8rem;
+            }
+            .sidebar-brand {
+                padding-bottom: 0;
+                border-bottom: none;
+                margin-bottom: 0;
+                flex: 1;
+            }
+            .sidebar-nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 2px;
+                flex: 1 1 100%;
+                order: 3;
+            }
+            .sidebar-nav a {
+                padding: 0.3rem 0.7rem;
+                font-size: 0.75rem;
+            }
+            .sidebar-nav a .num {
+                min-width: 20px;
+                font-size: 0.6rem;
+            }
+            .sidebar-footer {
+                display: none;
+            }
+            .main {
+                padding: 1.2rem;
+            }
+            .main-header h2 {
+                font-size: 1.4rem;
+            }
+            .prompt-entry {
+                flex-direction: column;
+                border-radius: var(--radius-sm);
+            }
+            .prompt-number {
+                border-right: none;
+                border-bottom: 1px solid var(--border-light);
+                padding: 0.3rem 0;
+                min-width: auto;
+                background: transparent;
+                justify-content: flex-start;
+                padding-left: 1rem;
+                font-size: 0.7rem;
+            }
+            .prompt-content {
+                padding: 0.8rem;
+            }
+            .prompt-body-text {
+                font-size: 0.75rem;
+                max-height: 100px;
+                padding: 0.6rem 0.8rem;
+            }
+            .prompt-body-text.expanded {
+                max-height: 600px;
+            }
+        }
 
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      animation: floatUp linear infinite;
-      opacity: 0;
-    }
+        @media (max-width: 400px) {
+            .main-header .top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .prompt-content .header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
 
-    @keyframes floatUp {
-      0% { transform: translateY(100vh) scale(0); opacity: 0; }
-      10% { opacity: 0.3; }
-      90% { opacity: 0.3; }
-      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-    }
-
-    @media (max-width: 768px) {
-      .timeline { padding-left: 40px; }
-      .timeline-dot { left: -42px; width: 30px; height: 30px; font-size: 0.65rem; top: 22px; }
-      .glass-card { padding: 1.2rem 1.4rem; }
-      .card-title h2 { font-size: 1.1rem; }
-      .card-title .num { font-size: 1.8rem; }
-      .prompt-body { font-size: 0.75rem; padding: 1rem; max-height: 350px; }
-      .copy-btn { padding: 0.3rem 1rem; font-size: 0.75rem; }
-    }
-
-    @media (max-width: 480px) {
-      .header h1 { font-size: 1.8rem; }
-      .card-title { flex-wrap: wrap; }
-      .card-title .num { font-size: 1.5rem; }
-      .card-header { flex-direction: column; align-items: stretch; }
-      .copy-btn { align-self: flex-start; }
-    }
-  </style>
+        /* scroll behaviour */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body>
 
-<div class="particles" id="particles"></div>
-
-<div class="container">
-  <div class="header">
-    <div class="badge"><i class="fas fa-bolt"></i> 50 Prompts · Timeline Library</div>
-    <h1>🧠 AI Prompt Reference</h1>
-    <div class="sub">Data Centrics Prompt · Steps by step Structures</div>
-  </div>
-
-  <div class="timeline" id="timeline"></div>
-
-  <div class="footer-note">
-    <i class="fas fa-arrow-right" style="color: var(--accent-purple); margin-right: 0.5rem;"></i>
-    আপনার প্রম্পট লাইব্রেরি · <strong>৫০টি</strong> ডেটা-সেন্ট্রিক প্রম্পট
-    <div class="formula">
-      <i class="fas fa-rocket" style="margin-right: 0.5rem;"></i> Role · Context · Goal · Constraints · Format
-    </div>
-  </div>
-</div>
-
-<script>
-  (function() {
-    // particles
-    const container = document.getElementById('particles');
-    const colors = ['#3b82f6', '#8b5cf6', '#06b6d4', '#10b981', '#f59e0b'];
-    for (let i = 0; i < 30; i++) {
-      const p = document.createElement('div');
-      p.classList.add('particle');
-      const size = Math.random() * 3 + 2;
-      p.style.width = size + 'px';
-      p.style.height = size + 'px';
-      p.style.left = Math.random() * 100 + '%';
-      p.style.animationDuration = (Math.random() * 10 + 10) + 's';
-      p.style.animationDelay = (Math.random() * 8) + 's';
-      p.style.background = colors[Math.floor(Math.random() * colors.length)];
-      container.appendChild(p);
-    }
-
-    // ---------- ALL 50 PROMPTS ----------
-    const prompts = [
-      // 1
-      `Act as a Senior Data Analyst.
-
-Analyze this dataset and explain:
-
-• Dataset purpose
-• Business context
-• Every column
-• Data types
-• Relationships
-• Possible business use cases
-• Expected KPIs
-• Potential problems
-• Questions stakeholders may ask
-
-Explain everything from beginner to advanced.`,
-
-      // 2
-      `Act as a Data Cleaning Expert.
-
-Perform a complete data quality assessment.
-
-Identify:
-• Missing values
-• Duplicate records
-• Invalid values
-• Incorrect data types
-• Outliers
-• Formatting issues
-• Inconsistent categories
-• Null patterns
-• Data integrity issues
-
-Suggest cleaning methods using:
-• Excel
-• SQL
-• Python
-• Power Query
-
-Prioritize the safest cleaning strategy.`,
-
-      // 3
-      `Act as a Senior Data Analyst.
-
-Perform a complete Exploratory Data Analysis.
-
-Include:
-• Summary statistics
-• Distribution analysis
-• Correlation analysis
-• Category analysis
-• Time analysis
-• Trend analysis
-• Outlier detection
-• Feature importance
-• Hidden patterns
-
-Explain every insight in business language.`,
-
-      // 4
-      `Act as a Business Intelligence Consultant.
-
-Analyze the dataset like a CEO dashboard.
-
-Provide:
-• Executive Summary
-• Top Findings
-• Opportunities
-• Risks
-• Root Causes
-• Actionable Recommendations
-• Revenue Drivers
-• Profit Drivers
-• Cost Drivers
-
-Rank every finding by business impact.`,
-
-      // 5
-      `Act as a BI Consultant.
-
-Design all relevant KPIs.
-
-For every KPI include:
-• Formula
-• Business meaning
-• DAX
-• SQL
-• Excel Formula
-• Visualization
-• Recommended Card
-
-Generate beginner to advanced KPIs.`,
-
-      // 6
-      `Act as a Senior Power BI Dashboard Architect.
-
-Design a world-class dashboard.
-
-Include:
-• Dashboard Layout
-• Pages
-• KPI Cards
-• Charts
-• Slicers
-• Drillthrough
-• Navigation
-• Color Theme
-• User Experience
-• Mobile Layout
-
-Explain why every visual exists.`,
-
-      // 7
-      `Act as a Microsoft Certified Power BI Expert.
-
-Generate advanced DAX measures.
-
-Include:
-• Running Total
-• Rolling Average
-• YoY
-• MoM
-• Ranking
-• Top N
-• Contribution %
-• Dynamic Titles
-• Time Intelligence
-• Advanced CALCULATE
-
-Explain every measure.`,
-
-      // 8
-      `Act as a SQL Performance Expert.
-
-Generate SQL queries for:
-• Top Customers
-• Monthly Sales
-• Product Ranking
-• Region Analysis
-• Window Functions
-• CTE
-• Views
-• Stored Procedures
-
-Optimize every query.`,
-
-      // 9
-      `Act as a Senior Python Data Analyst.
-
-Generate production-ready Python.
-
-Use:
-• Pandas
-• NumPy
-• Matplotlib
-• Plotly
-
-Include:
-• Cleaning
-• EDA
-• Charts
-• Insights
-• Summary Tables
-
-Write clean, commented code.`,
-
-      // 10
-      `Act as an Excel Expert.
-
-Suggest:
-• Pivot Tables
-• Power Query
-• Power Pivot
-• Dynamic Dashboard
-• Best Formulas
-• Conditional Formatting
-• Automation
-• Dashboard Layout
-
-Explain everything.`,
-
-      // 11
-      `Act as a Data Visualization Expert.
-
-Recommend the best charts.
-
-For each chart explain:
-• Purpose
-• Business Question
-• X-axis
-• Y-axis
-• Color
-• Sorting
-• Filtering
-• Tooltip
-• Why it is the best choice.`,
-
-      // 12
-      `Act as a Statistician.
-
-Perform:
-• Mean
-• Median
-• Mode
-• Variance
-• Std Dev
-• Correlation
-• Regression
-• Distribution
-• Confidence
-• Outlier Detection
-
-Interpret results in simple business language.`,
-
-      // 13
-      `Act as a Root Cause Analyst.
-
-Identify:
-• Why the metric changed
-• Contributing factors
-• Business drivers
-• Data evidence
-• Risk
-• Recommendations
-
-Rank causes by probability.`,
-
-      // 14
-      `Act as a Forecasting Expert.
-
-Analyze:
-• Trend
-• Seasonality
-• Growth
-• Moving Average
-• Forecast
-• Anomalies
-• Future opportunities
-
-Explain assumptions.`,
-
-      // 15
-      `Act as a Customer Analytics Expert.
-
-Analyze:
-• Customer Segments
-• Lifetime Value
-• Retention
-• Churn
-• Repeat Purchase
-• High Value Customers
-• Behavior
-• Recommendations`,
-
-      // 16
-      `Act as a Sales Analyst.
-
-Analyze:
-• Revenue
-• Profit
-• Margin
-• Sales Trend
-• Top Products
-• Worst Products
-• Regional Sales
-• Salesperson Performance
-• Recommendations`,
-
-      // 17
-      `Act as a Financial Analyst.
-
-Evaluate:
-• Revenue
-• Expenses
-• Profitability
-• Margins
-• Cash Flow Indicators
-• ROI
-• ROAS
-• Financial Risks
-• Recommendations`,
-
-      // 18
-      `Act as an AI Consultant.
-
-Determine whether Machine Learning is useful.
-
-Recommend:
-• Regression
-• Classification
-• Clustering
-• Forecasting
-• Recommendation System
-
-Explain expected business value.`,
-
-      // 19
-      `Act as a Senior Business Consultant.
-
-Generate an executive report.
-
-Include:
-• Executive Summary
-• Business Findings
-• Charts
-• KPIs
-• Risks
-• Recommendations
-• Next Steps
-• Priority Matrix
-• Business Score`,
-
-      // 20
-      `Act as a team consisting of:
-• Senior Data Analyst
-• Business Intelligence Consultant
-• Data Scientist
-• Statistician
-• Power BI Expert
-• SQL Expert
-• Python Developer
-• Excel Expert
-• Financial Analyst
-• Business Strategist
-
-Your goal is to perform an enterprise-grade analysis of the provided dataset.
-
-Complete the following:
-1. Data Understanding
-2. Data Quality Assessment
-3. Data Cleaning Strategy
-4. Exploratory Data Analysis
-5. Statistical Analysis
-6. KPI Design
-7. Business Insights
-8. Executive Summary
-9. Visualization Recommendations
-10. Dashboard Design
-11. Power BI Recommendations
-12. DAX Measures
-13. SQL Queries
-14. Python Analysis
-15. Excel Analysis
-16. Time Series Analysis
-17. Segmentation
-18. Root Cause Analysis
-19. Forecasting Opportunities
-20. Machine Learning Opportunities
-21. Risk Assessment
-22. Actionable Recommendations
-23. Limitations
-24. Future Analysis Suggestions
-
-Requirements:
-- Think step-by-step.
-- Never hallucinate data.
-- Clearly separate facts from assumptions.
-- Use professional business language.
-- Explain technical concepts in simple terms when appropriate.
-- Prioritize actionable insights over generic observations.
-- Use tables where they improve clarity.
-- Rank findings by business impact.
-- Recommend industry best practices.
-- Provide executive-ready output.`,
-
-      // 21
-      `Act as a Data Documentation Expert.
-
-Analyze the dataset and create complete documentation.
-
-Include:
-• Dataset Purpose
-• Source
-• Business Context
-• Data Dictionary
-• Column Definitions
-• Relationships
-• Data Types
-• Units
-• Constraints
-• Assumptions
-• Refresh Frequency
-• Data Owner
-• Usage Guidelines`,
-
-      // 22
-      `Act as a Data Governance Expert.
-
-Generate a professional Data Dictionary.
-
-For each column include:
-• Name
-• Description
-• Data Type
-• Allowed Values
-• Nullable
-• Example
-• Business Meaning`,
-
-      // 23
-      `Act as a Data Quality Consultant.
-
-Evaluate the dataset.
-
-Score each area from 0-100.
-
-Assess:
-• Completeness
-• Accuracy
-• Consistency
-• Validity
-• Uniqueness
-• Timeliness
-
-Provide improvement recommendations.`,
-
-      // 24
-      `Act as a Senior BI Consultant.
-
-Generate 100 business questions that can be answered using this dataset.
-
-Group them by:
-• Sales
-• Finance
-• Marketing
-• Operations
-• Customer
-• Executive`,
-
-      // 25
-      `Act as a Business Analyst.
-
-Based on the dataset identify:
-• Possible stakeholders
-• Their KPIs
-• Their dashboard needs
-• Their business questions
-• Recommended reports`,
-
-      // 26
-      `Act as a Machine Learning Engineer.
-
-Suggest new features that can be engineered.
-
-Explain:
-• Formula
-• Business Value
-• Implementation
-• Potential ML impact`,
-
-      // 27
-      `Act as a Statistician.
-
-Investigate every significant correlation.
-
-Explain:
-• Strength
-• Direction
-• Business meaning
-• Possible causes
-• Limitations`,
-
-      // 28
-      `Act as an Analytics Consultant.
-
-Detect all outliers.
-
-Determine:
-• Business reason
-• Data error
-• Fraud
-• Seasonality
-• Special event
-
-Provide recommendations.`,
-
-      // 29
-      `Act as a Customer Analytics Expert.
-
-Create meaningful customer segments.
-
-Explain:
-• Segment characteristics
-• Revenue contribution
-• Profitability
-• Behavior
-• Marketing strategy`,
-
-      // 30
-      `Act as a Financial Analyst.
-
-Determine what drives revenue.
-
-Analyze:
-• Products
-• Regions
-• Customers
-• Channels
-• Time
-• Pricing
-• Volume
-
-Explain root causes.`,
-
-      // 31
-      `Act as a Profitability Consultant.
-
-Identify all factors affecting profit.
-
-Rank each by impact.
-
-Recommend improvements.`,
-
-      // 32
-      `Act as an Operations Consultant.
-
-Analyze costs.
-
-Identify:
-• Waste
-• Inefficiencies
-• Savings
-• Automation opportunities
-• Cost reduction recommendations.`,
-
-      // 33
-      `Act as an Executive Dashboard Designer.
-
-Design an executive dashboard for CEOs.
-
-Show only high-impact KPIs.
-
-Recommend:
-• Cards
-• Charts
-• Filters
-• Alerts
-• Navigation
-• Executive summary.`,
-
-      // 34
-      `Act as an Operations Dashboard Designer.
-
-Design an operational dashboard.
-
-Focus on daily monitoring.
-
-Recommend:
-• KPIs
-• Tables
-• Alerts
-• Status indicators
-• Operational metrics.`,
-
-      // 35
-      `Act as a Marketing Analyst.
-
-Analyze:
-• Campaign Performance
-• Conversion
-• CAC
-• ROAS
-• ROI
-• Traffic
-• Customer Acquisition
-• Recommendations`,
-
-      // 36
-      `Act as a Supply Chain Analyst.
-
-Analyze:
-• Inventory Turnover
-• Stockout
-• Overstock
-• ABC Analysis
-• Demand Pattern
-• Recommendations`,
-
-      // 37
-      `Act as a Forecasting Expert.
-
-Predict future trends.
-
-Explain:
-• Method
-• Assumptions
-• Confidence
-• Business impact.`,
-
-      // 38
-      `Act as a Customer Retention Expert.
-
-Identify churn indicators.
-
-Explain:
-• Risk customers
-• Reasons
-• Retention strategy
-• Business impact.`,
-
-      // 39
-      `Act as a Fraud Analytics Specialist.
-
-Analyze suspicious transactions.
-
-Identify:
-• Patterns
-• Anomalies
-• High-risk records
-• Recommendations.`,
-
-      // 40
-      `Act as a Performance Analyst.
-
-Compare current performance against:
-• Previous Year
-• Industry
-• Target
-• Budget
-• Forecast
-
-Explain gaps.`,
-
-      // 41
-      `Act as a KPI Analyst.
-
-Review all KPIs.
-
-Determine:
-• Useful
-• Redundant
-• Missing
-• Misleading
-
-Suggest better KPIs.`,
-
-      // 42
-      `Act as a Business Storyteller.
-
-Turn the analysis into a compelling business story.
-
-Use:
-• Beginning
-• Problem
-• Evidence
-• Insights
-• Recommendations
-• Business impact.`,
-
-      // 43
-      `Act as a Presentation Designer.
-
-Prepare a board meeting presentation.
-
-Include:
-• Executive Summary
-• Charts
-• Key Insights
-• Recommendations
-• Next Steps.`,
-
-      // 44
-      `Act as a Data Governance Consultant.
-
-Review governance.
-
-Assess:
-• Ownership
-• Security
-• Quality
-• Metadata
-• Compliance
-• Recommendations`,
-
-      // 45
-      `Act as a Risk Analyst.
-
-Identify:
-• Business Risks
-• Financial Risks
-• Operational Risks
-• Customer Risks
-• Data Risks
-
-Rank by severity.`,
-
-      // 46
-      `Act as an AI Strategist.
-
-Identify where AI can improve this business.
-
-Recommend:
-• Automation
-• Prediction
-• Classification
-• Optimization
-• Generative AI
-• Business value.`,
-
-      // 47
-      `Act as an Automation Expert.
-
-Find repetitive processes.
-
-Recommend automation using:
-• Python
-• Power Automate
-• SQL
-• Power BI
-• AI.`,
-
-      // 48
-      `Act as a Decision Support Analyst.
-
-Provide decision support.
-
-Include:
-• Evidence
-• Pros
-• Cons
-• Risk
-• Expected Outcome
-• Recommendation.`,
-
-      // 49
-      `Act as a Report Reviewer.
-
-Review an existing report.
-
-Evaluate:
-• Accuracy
-• Clarity
-• KPIs
-• Charts
-• Insights
-• Recommendations
-• Professional quality.`,
-
-      // 50
-      `Act as a Senior Management Consultant.
-
-Review the complete dataset like a consulting firm (McKinsey, BCG, Bain).
-
-Provide:
-• Executive Summary
-• Strategic Analysis
-• Business Risks
-• Competitive Opportunities
-• Financial Impact
-• Operational Improvements
-• Growth Strategy
-• Priority Matrix
-• 90-Day Action Plan
-• 1-Year Roadmap
-• Executive Recommendations.`
-    ];
-
-    const titles = [
-      "Data Understanding",
-      "Data Cleaning",
-      "Exploratory Data Analysis (EDA)",
-      "Business Insight Generator",
-      "KPI Designer",
-      "Dashboard Planner",
-      "DAX Generator",
-      "SQL Analyst",
-      "Python Data Analysis",
-      "Excel Analysis",
-      "Visualization Expert",
-      "Statistical Analysis",
-      "Root Cause Analysis",
-      "Time Series Analysis",
-      "Customer Analytics",
-      "Sales Analytics",
-      "Financial Analysis",
-      "ML Opportunity Finder",
-      "Executive Report Generator",
-      "Complete Enterprise Analysis",
-      "Dataset Documentation Generator",
-      "Data Dictionary Generator",
-      "Data Quality Scoring",
-      "Business Question Generator",
-      "Stakeholder Requirement Analyzer",
-      "Feature Engineering Prompt",
-      "Correlation Investigation",
-      "Outlier Investigation",
-      "Segmentation Prompt",
-      "Revenue Driver Analysis",
-      "Profit Driver Analysis",
-      "Cost Optimization Prompt",
-      "Executive Dashboard Prompt",
-      "Operational Dashboard Prompt",
-      "Marketing Analytics",
-      "Inventory Analysis",
-      "Forecast Planning",
-      "Churn Analysis",
-      "Fraud Detection",
-      "Performance Benchmarking",
-      "KPI Health Check",
-      "Storytelling Prompt",
-      "Presentation Builder",
-      "Data Governance Review",
-      "Risk Assessment",
-      "AI Opportunity Analysis",
-      "Automation Opportunity",
-      "Decision Support",
-      "Report Reviewer",
-      "Senior Consultant Prompt"
-    ];
-
-    const tags = [
-      ["#analysis", "#exploration"],
-      ["#cleaning", "#quality"],
-      ["#eda", "#statistics"],
-      ["#insights", "#executive"],
-      ["#kpi", "#dax"],
-      ["#dashboard", "#powerbi"],
-      ["#dax", "#powerbi"],
-      ["#sql", "#optimization"],
-      ["#python", "#pandas"],
-      ["#excel", "#automation"],
-      ["#visualization", "#charts"],
-      ["#statistics", "#analysis"],
-      ["#rootcause", "#analysis"],
-      ["#forecast", "#timeseries"],
-      ["#customer", "#segmentation"],
-      ["#sales", "#performance"],
-      ["#finance", "#analysis"],
-      ["#ml", "#ai"],
-      ["#report", "#executive"],
-      ["#enterprise", "#complete"],
-      ["#documentation", "#metadata"],
-      ["#dictionary", "#governance"],
-      ["#quality", "#scoring"],
-      ["#questions", "#stakeholder"],
-      ["#stakeholder", "#requirements"],
-      ["#features", "#engineering"],
-      ["#correlation", "#stats"],
-      ["#outliers", "#anomalies"],
-      ["#segmentation", "#customer"],
-      ["#revenue", "#drivers"],
-      ["#profit", "#drivers"],
-      ["#cost", "#optimization"],
-      ["#executive", "#dashboard"],
-      ["#operations", "#monitoring"],
-      ["#marketing", "#analytics"],
-      ["#inventory", "#supplychain"],
-      ["#forecast", "#planning"],
-      ["#churn", "#retention"],
-      ["#fraud", "#detection"],
-      ["#benchmarking", "#performance"],
-      ["#kpi", "#review"],
-      ["#storytelling", "#narrative"],
-      ["#presentation", "#board"],
-      ["#governance", "#compliance"],
-      ["#risk", "#assessment"],
-      ["#ai", "#opportunity"],
-      ["#automation", "#process"],
-      ["#decisions", "#support"],
-      ["#review", "#quality"],
-      ["#consultant", "#strategy"]
-    ];
-
-    const timeline = document.getElementById('timeline');
-
-    let html = '';
-    for (let i = 0; i < prompts.length; i++) {
-      const num = i + 1;
-      const dotColor = i % 2 === 0 ? 'color-1' : 'color-2';
-      const promptText = prompts[i];
-      const tagList = tags[i] || ['#prompt'];
-
-      html += `
-        <div class="timeline-item">
-          <div class="timeline-dot">${String(num).padStart(2, '0')}</div>
-          <div class="glass-card">
-            <div class="card-header">
-              <div class="card-title">
-                <span class="num">${String(num).padStart(2, '0')}</span>
-                <div>
-                  <h2>${titles[i]}</h2>
-                </div>
-              </div>
-              <button class="copy-btn" data-prompt="prompt-${num}"><i class="fas fa-copy"></i> Copy</button>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="icon"><i class="fas fa-terminal"></i></div>
+            <div>
+                <h1>Prompt<span>Ref</span></h1>
+                <div class="sub">50 Data Prompts</div>
             </div>
-
-            <div class="prompt-body" id="prompt-${num}">${promptText}</div>
-
-            <div class="card-footer">
-              ${tagList.map(t => `<span class="tag"><i class="fas fa-tag"></i> ${t}</span>`).join('')}
-            </div>
-          </div>
         </div>
-      `;
-    }
 
-    timeline.innerHTML = html;
+        <nav class="sidebar-nav" id="sidebarNav"></nav>
 
-    // copy buttons
-    document.querySelectorAll('.copy-btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const targetId = this.getAttribute('data-prompt');
-        const promptEl = document.getElementById(targetId);
-        if (!promptEl) return;
+        <div class="sidebar-footer">
+            <strong>৫০</strong>টি প্রম্পট · ডেটা অ্যানালাইসিস
+        </div>
+    </aside>
 
-        let text = promptEl.innerText.trim();
+    <!-- MAIN -->
+    <main class="main">
+        <div class="main-header">
+            <div class="top">
+                <div>
+                    <h2>Prompt Reference</h2>
+                    <div class="sub">ডেটা অ্যানালাইসিস, BI, মেশিন লার্নিং — সবকিছু</div>
+                </div>
+                <div class="badge-count"><strong id="totalCount">50</strong> prompts</div>
+            </div>
+        </div>
 
-        navigator.clipboard.writeText(text).then(() => {
-          const orig = this.innerHTML;
-          this.innerHTML = '<i class="fas fa-check"></i> Copied!';
-          this.classList.add('copied');
-          setTimeout(() => {
-            this.innerHTML = orig;
-            this.classList.remove('copied');
-          }, 2000);
-        }).catch(() => {
-          const textarea = document.createElement('textarea');
-          textarea.value = text;
-          document.body.appendChild(textarea);
-          textarea.select();
-          document.execCommand('copy');
-          document.body.removeChild(textarea);
-          const orig = this.innerHTML;
-          this.innerHTML = '<i class="fas fa-check"></i> Copied!';
-          this.classList.add('copied');
-          setTimeout(() => {
-            this.innerHTML = orig;
-            this.classList.remove('copied');
-          }, 2000);
-        });
-      });
-    });
-  })();
-</script>
+        <div class="prompt-list" id="promptList"></div>
+    </main>
 
+    <script>
+        (function() {
+            // ----- DATA -----
+            const titles = [
+                "Data Understanding", "Data Cleaning", "Exploratory Data Analysis (EDA)",
+                "Business Insight Generator", "KPI Designer", "Dashboard Planner",
+                "DAX Generator", "SQL Analyst", "Python Data Analysis",
+                "Excel Analysis", "Visualization Expert", "Statistical Analysis",
+                "Root Cause Analysis", "Time Series Analysis", "Customer Analytics",
+                "Sales Analytics", "Financial Analysis", "ML Opportunity Finder",
+                "Executive Report Generator", "Complete Enterprise Analysis",
+                "Dataset Documentation Generator", "Data Dictionary Generator",
+                "Data Quality Scoring", "Business Question Generator",
+                "Stakeholder Requirement Analyzer", "Feature Engineering Prompt",
+                "Correlation Investigation", "Outlier Investigation",
+                "Segmentation Prompt", "Revenue Driver Analysis",
+                "Profit Driver Analysis", "Cost Optimization Prompt",
+                "Executive Dashboard Prompt", "Operational Dashboard Prompt",
+                "Marketing Analytics", "Inventory Analysis",
+                "Forecast Planning", "Churn Analysis",
+                "Fraud Detection", "Performance Benchmarking",
+                "KPI Health Check", "Storytelling Prompt",
+                "Presentation Builder", "Data Governance Review",
+                "Risk Assessment", "AI Opportunity Analysis",
+                "Automation Opportunity", "Decision Support",
+                "Report Reviewer", "Senior Consultant Prompt"
+            ];
+
+            const prompts = [
+                `Act as a Senior Data Analyst.
+
+        Analyze this dataset and explain:
+
+        • Dataset purpose
+        • Business context
+        • Every column
+        • Data types
+        • Relationships
+        • Possible business use cases
+        • Expected KPIs
+        • Potential problems
+        • Questions stakeholders may ask
+
+        Explain everything from beginner to advanced.`,
+
+                `Act as a Data Cleaning Expert.
+
+        Perform a complete data quality assessment.
+
+        Identify:
+        • Missing values
+        • Duplicate records
+        • Invalid values
+        • Incorrect data types
+        • Outliers
+        • Formatting issues
+        • Inconsistent categories
+        • Null patterns
+        • Data integrity issues
+
+        Suggest cleaning methods using:
+        • Excel
+        • SQL
+        • Python
+        • Power Query
+
+        Prioritize the safest cleaning strategy.`,
+
+                `Act as a Senior Data Analyst.
+
+        Perform a complete Exploratory Data Analysis.
+
+        Include:
+        • Summary statistics
+        • Distribution analysis
+        • Correlation analysis
+        • Category analysis
+        • Time analysis
+        • Trend analysis
+        • Outlier detection
+        • Feature importance
+        • Hidden patterns
+
+        Explain every insight in business language.`,
+
+                `Act as a Business Intelligence Consultant.
+
+        Analyze the dataset like a CEO dashboard.
+
+        Provide:
+        • Executive Summary
+        • Top Findings
+        • Opportunities
+        • Risks
+        • Root Causes
+        • Actionable Recommendations
+        • Revenue Drivers
+        • Profit Drivers
+        • Cost Drivers
+
+        Rank every finding by business impact.`,
+
+                `Act as a BI Consultant.
+
+        Design all relevant KPIs.
+
+        For every KPI include:
+        • Formula
+        • Business meaning
+        • DAX
+        • SQL
+        • Excel Formula
+        • Visualization
+        • Recommended Card
+
+        Generate beginner to advanced KPIs.`,
+
+                `Act as a Senior Power BI Dashboard Architect.
+
+        Design a world-class dashboard.
+
+        Include:
+        • Dashboard Layout
+        • Pages
+        • KPI Cards
+        • Charts
+        • Slicers
+        • Drillthrough
+        • Navigation
+        • Color Theme
+        • User Experience
+        • Mobile Layout
+
+        Explain why every visual exists.`,
+
+                `Act as a Microsoft Certified Power BI Expert.
+
+        Generate advanced DAX measures.
+
+        Include:
+        • Running Total
+        • Rolling Average
+        • YoY
+        • MoM
+        • Ranking
+        • Top N
+        • Contribution %
+        • Dynamic Titles
+        • Time Intelligence
+        • Advanced CALCULATE
+
+        Explain every measure.`,
+
+                `Act as a SQL Performance Expert.
+
+        Generate SQL queries for:
+        • Top Customers
+        • Monthly Sales
+        • Product Ranking
+        • Region Analysis
+        • Window Functions
+        • CTE
+        • Views
+        • Stored Procedures
+
+        Optimize every query.`,
+
+                `Act as a Senior Python Data Analyst.
+
+        Generate production-ready Python.
+
+        Use:
+        • Pandas
+        • NumPy
+        • Matplotlib
+        • Plotly
+
+        Include:
+        • Cleaning
+        • EDA
+        • Charts
+        • Insights
+        • Summary Tables
+
+        Write clean, commented code.`,
+
+                `Act as an Excel Expert.
+
+        Suggest:
+        • Pivot Tables
+        • Power Query
+        • Power Pivot
+        • Dynamic Dashboard
+        • Best Formulas
+        • Conditional Formatting
+        • Automation
+        • Dashboard Layout
+
+        Explain everything.`,
+
+                `Act as a Data Visualization Expert.
+
+        Recommend the best charts.
+
+        For each chart explain:
+        • Purpose
+        • Business Question
+        • X-axis
+        • Y-axis
+        • Color
+        • Sorting
+        • Filtering
+        • Tooltip
+        • Why it is the best choice.`,
+
+                `Act as a Statistician.
+
+        Perform:
+        • Mean
+        • Median
+        • Mode
+        • Variance
+        • Std Dev
+        • Correlation
+        • Regression
+        • Distribution
+        • Confidence
+        • Outlier Detection
+
+        Interpret results in simple business language.`,
+
+                `Act as a Root Cause Analyst.
+
+        Identify:
+        • Why the metric changed
+        • Contributing factors
+        • Business drivers
+        • Data evidence
+        • Risk
+        • Recommendations
+
+        Rank causes by probability.`,
+
+                `Act as a Forecasting Expert.
+
+        Analyze:
+        • Trend
+        • Seasonality
+        • Growth
+        • Moving Average
+        • Forecast
+        • Anomalies
+        • Future opportunities
+
+        Explain assumptions.`,
+
+                `Act as a Customer Analytics Expert.
+
+        Analyze:
+        • Customer Segments
+        • Lifetime Value
+        • Retention
+        • Churn
+        • Repeat Purchase
+        • High Value Customers
+        • Behavior
+        • Recommendations`,
+
+                `Act as a Sales Analyst.
+
+        Analyze:
+        • Revenue
+        • Profit
+        • Margin
+        • Sales Trend
+        • Top Products
+        • Worst Products
+        • Regional Sales
+        • Salesperson Performance
+        • Recommendations`,
+
+                `Act as a Financial Analyst.
+
+        Evaluate:
+        • Revenue
+        • Expenses
+        • Profitability
+        • Margins
+        • Cash Flow Indicators
+        • ROI
+        • ROAS
+        • Financial Risks
+        • Recommendations`,
+
+                `Act as an AI Consultant.
+
+        Determine whether Machine Learning is useful.
+
+        Recommend:
+        • Regression
+        • Classification
+        • Clustering
+        • Forecasting
+        • Recommendation System
+
+        Explain expected business value.`,
+
+                `Act as a Senior Business Consultant.
+
+        Generate an executive report.
+
+        Include:
+        • Executive Summary
+        • Business Findings
+        • Charts
+        • KPIs
+        • Risks
+        • Recommendations
+        • Next Steps
+        • Priority Matrix
+        • Business Score`,
+
+                `Act as a team consisting of:
+        • Senior Data Analyst
+        • Business Intelligence Consultant
+        • Data Scientist
+        • Statistician
+        • Power BI Expert
+        • SQL Expert
+        • Python Developer
+        • Excel Expert
+        • Financial Analyst
+        • Business Strategist
+
+        Your goal is to perform an enterprise-grade analysis of the provided dataset.
+
+        Complete the following:
+        1. Data Understanding
+        2. Data Quality Assessment
+        3. Data Cleaning Strategy
+        4. Exploratory Data Analysis
+        5. Statistical Analysis
+        6. KPI Design
+        7. Business Insights
+        8. Executive Summary
+        9. Visualization Recommendations
+        10. Dashboard Design
+        11. Power BI Recommendations
+        12. DAX Measures
+        13. SQL Queries
+        14. Python Analysis
+        15. Excel Analysis
+        16. Time Series Analysis
+        17. Segmentation
+        18. Root Cause Analysis
+        19. Forecasting Opportunities
+        20. Machine Learning Opportunities
+        21. Risk Assessment
+        22. Actionable Recommendations
+        23. Limitations
+        24. Future Analysis Suggestions
+
+        Requirements:
+        - Think step-by-step.
+        - Never hallucinate data.
+        - Clearly separate facts from assumptions.
+        - Use professional business language.
+        - Explain technical concepts in simple terms when appropriate.
+        - Prioritize actionable insights over generic observations.
+        - Use tables where they improve clarity.
+        - Rank findings by business impact.
+        - Recommend industry best practices.
+        - Provide executive-ready output.`,
+
+                `Act as a Data Documentation Expert.
+
+        Analyze the dataset and create complete documentation.
+
+        Include:
+        • Dataset Purpose
+        • Source
+        • Business Context
+        • Data Dictionary
+        • Column Definitions
+        • Relationships
+        • Data Types
+        • Units
+        • Constraints
+        • Assumptions
+        • Refresh Frequency
+        • Data Owner
+        • Usage Guidelines`,
+
+                `Act as a Data Governance Expert.
+
+        Generate a professional Data Dictionary.
+
+        For each column include:
+        • Name
+        • Description
+        • Data Type
+        • Allowed Values
+        • Nullable
+        • Example
+        • Business Meaning`,
+
+                `Act as a Data Quality Consultant.
+
+        Evaluate the dataset.
+
+        Score each area from 0-100.
+
+        Assess:
+        • Completeness
+        • Accuracy
+        • Consistency
+        • Validity
+        • Uniqueness
+        • Timeliness
+
+        Provide improvement recommendations.`,
+
+                `Act as a Senior BI Consultant.
+
+        Generate 100 business questions that can be answered using this dataset.
+
+        Group them by:
+        • Sales
+        • Finance
+        • Marketing
+        • Operations
+        • Customer
+        • Executive`,
+
+                `Act as a Business Analyst.
+
+        Based on the dataset identify:
+        • Possible stakeholders
+        • Their KPIs
+        • Their dashboard needs
+        • Their business questions
+        • Recommended reports`,
+
+                `Act as a Machine Learning Engineer.
+
+        Suggest new features that can be engineered.
+
+        Explain:
+        • Formula
+        • Business Value
+        • Implementation
+        • Potential ML impact`,
+
+                `Act as a Statistician.
+
+        Investigate every significant correlation.
+
+        Explain:
+        • Strength
+        • Direction
+        • Business meaning
+        • Possible causes
+        • Limitations`,
+
+                `Act as an Analytics Consultant.
+
+        Detect all outliers.
+
+        Determine:
+        • Business reason
+        • Data error
+        • Fraud
+        • Seasonality
+        • Special event
+
+        Provide recommendations.`,
+
+                `Act as a Customer Analytics Expert.
+
+        Create meaningful customer segments.
+
+        Explain:
+        • Segment characteristics
+        • Revenue contribution
+        • Profitability
+        • Behavior
+        • Marketing strategy`,
+
+                `Act as a Financial Analyst.
+
+        Determine what drives revenue.
+
+        Analyze:
+        • Products
+        • Regions
+        • Customers
+        • Channels
+        • Time
+        • Pricing
+        • Volume
+
+        Explain root causes.`,
+
+                `Act as a Profitability Consultant.
+
+        Identify all factors affecting profit.
+
+        Rank each by impact.
+
+        Recommend improvements.`,
+
+                `Act as an Operations Consultant.
+
+        Analyze costs.
+
+        Identify:
+        • Waste
+        • Inefficiencies
+        • Savings
+        • Automation opportunities
+        • Cost reduction recommendations.`,
+
+                `Act as an Executive Dashboard Designer.
+
+        Design an executive dashboard for CEOs.
+
+        Show only high-impact KPIs.
+
+        Recommend:
+        • Cards
+        • Charts
+        • Filters
+        • Alerts
+        • Navigation
+        • Executive summary.`,
+
+                `Act as an Operations Dashboard Designer.
+
+        Design an operational dashboard.
+
+        Focus on daily monitoring.
+
+        Recommend:
+        • KPIs
+        • Tables
+        • Alerts
+        • Status indicators
+        • Operational metrics.`,
+
+                `Act as a Marketing Analyst.
+
+        Analyze:
+        • Campaign Performance
+        • Conversion
+        • CAC
+        • ROAS
+        • ROI
+        • Traffic
+        • Customer Acquisition
+        • Recommendations`,
+
+                `Act as a Supply Chain Analyst.
+
+        Analyze:
+        • Inventory Turnover
+        • Stockout
+        • Overstock
+        • ABC Analysis
+        • Demand Pattern
+        • Recommendations`,
+
+                `Act as a Forecasting Expert.
+
+        Predict future trends.
+
+        Explain:
+        • Method
+        • Assumptions
+        • Confidence
+        • Business impact.`,
+
+                `Act as a Customer Retention Expert.
+
+        Identify churn indicators.
+
+        Explain:
+        • Risk customers
+        • Reasons
+        • Retention strategy
+        • Business impact.`,
+
+                `Act as a Fraud Analytics Specialist.
+
+        Analyze suspicious transactions.
+
+        Identify:
+        • Patterns
+        • Anomalies
+        • High-risk records
+        • Recommendations.`,
+
+                `Act as a Performance Analyst.
+
+        Compare current performance against:
+        • Previous Year
+        • Industry
+        • Target
+        • Budget
+        • Forecast
+
+        Explain gaps.`,
+
+                `Act as a KPI Analyst.
+
+        Review all KPIs.
+
+        Determine:
+        • Useful
+        • Redundant
+        • Missing
+        • Misleading
+
+        Suggest better KPIs.`,
+
+                `Act as a Business Storyteller.
+
+        Turn the analysis into a compelling business story.
+
+        Use:
+        • Beginning
+        • Problem
+        • Evidence
+        • Insights
+        • Recommendations
+        • Business impact.`,
+
+                `Act as a Presentation Designer.
+
+        Prepare a board meeting presentation.
+
+        Include:
+        • Executive Summary
+        • Charts
+        • Key Insights
+        • Recommendations
+        • Next Steps.`,
+
+                `Act as a Data Governance Consultant.
+
+        Review governance.
+
+        Assess:
+        • Ownership
+        • Security
+        • Quality
+        • Metadata
+        • Compliance
+        • Recommendations`,
+
+                `Act as a Risk Analyst.
+
+        Identify:
+        • Business Risks
+        • Financial Risks
+        • Operational Risks
+        • Customer Risks
+        • Data Risks
+
+        Rank by severity.`,
+
+                `Act as an AI Strategist.
+
+        Identify where AI can improve this business.
+
+        Recommend:
+        • Automation
+        • Prediction
+        • Classification
+        • Optimization
+        • Generative AI
+        • Business value.`,
+
+                `Act as an Automation Expert.
+
+        Find repetitive processes.
+
+        Recommend automation using:
+        • Python
+        • Power Automate
+        • SQL
+        • Power BI
+        • AI.`,
+
+                `Act as a Decision Support Analyst.
+
+        Provide decision support.
+
+        Include:
+        • Evidence
+        • Pros
+        • Cons
+        • Risk
+        • Expected Outcome
+        • Recommendation.`,
+
+                `Act as a Report Reviewer.
+
+        Review an existing report.
+
+        Evaluate:
+        • Accuracy
+        • Clarity
+        • KPIs
+        • Charts
+        • Insights
+        • Recommendations
+        • Professional quality.`,
+
+                `Act as a Senior Management Consultant.
+
+        Review the complete dataset like a consulting firm (McKinsey, BCG, Bain).
+
+        Provide:
+        • Executive Summary
+        • Strategic Analysis
+        • Business Risks
+        • Competitive Opportunities
+        • Financial Impact
+        • Operational Improvements
+        • Growth Strategy
+        • Priority Matrix
+        • 90-Day Action Plan
+        • 1-Year Roadmap
+        • Executive Recommendations.`
+            ];
+
+            const tagGroups = [
+                ["#analysis", "#exploration"],
+                ["#cleaning", "#quality"],
+                ["#eda", "#statistics"],
+                ["#insights", "#executive"],
+                ["#kpi", "#dax"],
+                ["#dashboard", "#powerbi"],
+                ["#dax", "#powerbi"],
+                ["#sql", "#optimization"],
+                ["#python", "#pandas"],
+                ["#excel", "#automation"],
+                ["#visualization", "#charts"],
+                ["#statistics", "#analysis"],
+                ["#rootcause", "#analysis"],
+                ["#forecast", "#timeseries"],
+                ["#customer", "#segmentation"],
+                ["#sales", "#performance"],
+                ["#finance", "#analysis"],
+                ["#ml", "#ai"],
+                ["#report", "#executive"],
+                ["#enterprise", "#complete"],
+                ["#documentation", "#metadata"],
+                ["#dictionary", "#governance"],
+                ["#quality", "#scoring"],
+                ["#questions", "#stakeholder"],
+                ["#stakeholder", "#requirements"],
+                ["#features", "#engineering"],
+                ["#correlation", "#stats"],
+                ["#outliers", "#anomalies"],
+                ["#segmentation", "#customer"],
+                ["#revenue", "#drivers"],
+                ["#profit", "#drivers"],
+                ["#cost", "#optimization"],
+                ["#executive", "#dashboard"],
+                ["#operations", "#monitoring"],
+                ["#marketing", "#analytics"],
+                ["#inventory", "#supplychain"],
+                ["#forecast", "#planning"],
+                ["#churn", "#retention"],
+                ["#fraud", "#detection"],
+                ["#benchmarking", "#performance"],
+                ["#kpi", "#review"],
+                ["#storytelling", "#narrative"],
+                ["#presentation", "#board"],
+                ["#governance", "#compliance"],
+                ["#risk", "#assessment"],
+                ["#ai", "#opportunity"],
+                ["#automation", "#process"],
+                ["#decisions", "#support"],
+                ["#review", "#quality"],
+                ["#consultant", "#strategy"]
+            ];
+
+            // ----- RENDER -----
+            const sidebarNav = document.getElementById('sidebarNav');
+            const promptList = document.getElementById('promptList');
+
+            let sidebarHTML = '';
+            let listHTML = '';
+
+            for (let i = 0; i < prompts.length; i++) {
+                const num = i + 1;
+                const title = titles[i];
+                const text = prompts[i];
+                const tags = tagGroups[i] || ['#prompt'];
+
+                // sidebar
+                sidebarHTML += `
+                    <a href="#prompt-${num}" data-index="${i}" class="${i === 0 ? 'active' : ''}">
+                        <span class="num">${String(num).padStart(2, '0')}</span>
+                        <span class="title">${title}</span>
+                        <span class="dot"></span>
+                    </a>
+                `;
+
+                // list
+                const tagHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+                // escape & decorate text
+                let decorated = text
+                    .replace(/•/g, '<span class="bullet">•</span>')
+                    .replace(/Act as/g, '<span class="role">Act as</span>');
+
+                // highlight common keywords
+                const keywords = ['Requirements', 'Identify', 'Include', 'Analyze', 'Explain', 'Perform',
+                    'Design', 'Generate', 'Suggest', 'Evaluate', 'Recommend', 'Review', 'Provide',
+                    'Determine', 'Create', 'Investigate', 'Detect', 'Design', 'Turn', 'Prepare',
+                    'Find', 'Score', 'Assess', 'Compare', 'Rank', 'Prioritize', 'Goal'
+                ];
+                const regex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
+                decorated = decorated.replace(regex, '<span class="highlight">$1</span>');
+
+                listHTML += `
+                    <div class="prompt-entry" id="prompt-${num}">
+                        <div class="prompt-number">${String(num).padStart(2, '0')}</div>
+                        <div class="prompt-content">
+                            <div class="header-row">
+                                <h3>${title}</h3>
+                                <div class="tags">${tagHTML}</div>
+                            </div>
+                            <div class="prompt-body-text" data-expanded="false">${decorated}</div>
+                            <div class="prompt-actions">
+                                <button class="copy-btn" data-prompt="prompt-${num}"><i class="fas fa-copy"></i> Copy</button>
+                                <button class="expand-btn" data-target="prompt-${num}">
+                                    <i class="fas fa-chevron-down"></i> <span>Expand</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            sidebarNav.innerHTML = sidebarHTML;
+            promptList.innerHTML = listHTML;
+
+            // ----- SIDEBAR NAV -----
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const target = this.getAttribute('href');
+                    const el = document.querySelector(target);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            });
+
+            // ----- COPY -----
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const targetId = this.getAttribute('data-prompt');
+                    const el = document.getElementById(targetId);
+                    if (!el) return;
+
+                    const bodyEl = el.querySelector('.prompt-body-text') || el;
+                    let text = bodyEl.innerText.trim();
+
+                    navigator.clipboard.writeText(text).then(() => {
+                        const orig = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        this.classList.add('copied');
+                        setTimeout(() => {
+                            this.innerHTML = orig;
+                            this.classList.remove('copied');
+                        }, 2000);
+                    }).catch(() => {
+                        const ta = document.createElement('textarea');
+                        ta.value = text;
+                        document.body.appendChild(ta);
+                        ta.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(ta);
+                        const orig = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        this.classList.add('copied');
+                        setTimeout(() => {
+                            this.innerHTML = orig;
+                            this.classList.remove('copied');
+                        }, 2000);
+                    });
+                });
+            });
+
+            // ----- EXPAND / COLLAPSE -----
+            document.querySelectorAll('.expand-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const entry = document.getElementById(targetId);
+                    if (!entry) return;
+
+                    const body = entry.querySelector('.prompt-body-text');
+                    if (!body) return;
+
+                    const isExpanded = body.dataset.expanded === 'true';
+                    if (isExpanded) {
+                        body.classList.remove('expanded');
+                        body.dataset.expanded = 'false';
+                        this.innerHTML = '<i class="fas fa-chevron-down"></i> <span>Expand</span>';
+                    } else {
+                        body.classList.add('expanded');
+                        body.dataset.expanded = 'true';
+                        this.innerHTML = '<i class="fas fa-chevron-up"></i> <span>Collapse</span>';
+                    }
+                });
+            });
+
+            // ----- SCROLL SPY -----
+            const entries = document.querySelectorAll('.prompt-entry');
+            const links = document.querySelectorAll('.sidebar-nav a');
+
+            const observer = new IntersectionObserver((observed) => {
+                observed.forEach(ob => {
+                    if (ob.isIntersecting) {
+                        const id = ob.target.id;
+                        links.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }, { threshold: 0.35 });
+
+            entries.forEach(entry => observer.observe(entry));
+
+            // total count
+            document.getElementById('totalCount').textContent = prompts.length;
+
+            // if on load, first active
+            setTimeout(() => {
+                const first = document.querySelector('.prompt-entry');
+                if (first) {
+                    const id = first.id;
+                    links.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                    });
+                }
+            }, 100);
+        })();
+    </script>
 </body>
 </html>
