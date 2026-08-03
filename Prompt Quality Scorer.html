@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Prompt Quality Scorer | 0-100</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --border-color: #2d3548;
+            --glass-bg: rgba(26, 31, 46, 0.75);
+            --input-bg: #1e2433;
+        }
+        body {
+            font-family: 'Segoe UI', 'Noto Sans Bengali', system-ui, sans-serif;
+            background: var(--bg-primary);
+            background-image: radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+                              radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .glass-panel:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 50px;
+            padding: 0.4rem 1.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.3rem;
+        }
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: 'Segoe UI', 'Noto Sans Bengali', system-ui, sans-serif;
+            transition: all 0.3s ease;
+            outline: none;
+            resize: vertical;
+            min-height: 180px;
+            line-height: 1.7;
+        }
+        .form-group textarea:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+        .form-group textarea::placeholder {
+            color: #4a5568;
+        }
+        .btn-group {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.4);
+        }
+        .btn-secondary {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        .btn-secondary:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, var(--accent-green), #059669);
+            color: white;
+        }
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* Scorer Results */
+        .scorer-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: none;
+        }
+        .scorer-section.visible {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .score-ring {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .score-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem;
+            font-weight: 800;
+            border: 5px solid var(--accent-blue);
+            flex-shrink: 0;
+            transition: all 0.8s ease;
+        }
+        .score-details {
+            flex: 1;
+            min-width: 250px;
+        }
+        .score-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin: 0.3rem 0;
+        }
+        .score-bar .bar-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            width: 90px;
+            flex-shrink: 0;
+            font-weight: 500;
+        }
+        .score-bar .bar-track {
+            flex: 1;
+            height: 7px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .score-bar .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.8s ease;
+            width: 0%;
+        }
+        .score-bar .bar-value {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            width: 35px;
+            text-align: right;
+            font-weight: 600;
+        }
+        .score-feedback {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.8rem;
+            padding: 0.8rem 1rem;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+            border-left: 3px solid var(--accent-cyan);
+        }
+        .score-feedback ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.3rem 0 0 0;
+        }
+        .score-feedback li {
+            padding: 0.15rem 0;
+            font-size: 0.8rem;
+        }
+        .score-feedback li i {
+            margin-right: 0.5rem;
+            color: var(--accent-cyan);
+        }
+        .badge-score {
+            display: inline-block;
+            padding: 0.15rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .placeholder-text {
+            color: var(--text-secondary);
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 1rem 0;
+        }
+        .example-prompts {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.3rem;
+        }
+        .example-btn {
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            border-radius: 20px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .example-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--text-primary);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent-green);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 12px;
+            font-weight: 600;
+            z-index: 100;
+            animation: toastIn 0.4s ease-out, toastOut 0.4s ease-in 2.5s forwards;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+        @keyframes toastIn {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes toastOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+            .glass-panel {
+                padding: 1.5rem;
+            }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .score-ring {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            .score-circle {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+            .score-bar .bar-label {
+                width: 70px;
+                font-size: 0.7rem;
+            }
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="glass-panel">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-badge">
+                    <i class="fas fa-star"></i> AI Prompt Quality Scorer
+                </div>
+                <h1>🎯 Prompt Quality Scorer</h1>
+                <p>ইংরেজি বা বাংলা — যেকোনো প্রম্পট পেস্ট করুন, ৫টি ডাইমেনশনে ০–১০০ স্কোর সহ বিস্তারিত ফিডব্যাক পান</p>
+            </div>
+
+            <!-- Input -->
+            <div class="form-group">
+                <label><i class="fas fa-pen"></i> আপনার প্রম্পট লিখুন বা পেস্ট করুন (ইংরেজি/বাংলা)</label>
+                <textarea id="promptInput" placeholder="# আপনার প্রম্পট এখানে লিখুন...
+
+        উদাহরণ (বাংলা): 
+        আপনি একজন সিনিয়র ফুল-স্ট্যাক ডেভেলপার হিসেবে কাজ করুন যার ১০+ বছরের অভিজ্ঞতা রয়েছে। 
+        JWT টোকেন ব্যবহার করে ইউজার অথেন্টিকেশনের জন্য একটি REST API তৈরি করুন। 
+        এররে হ্যান্ডলিং, ইনপুট ভ্যালিডেশন এবং সিকিউরিটি বেস্ট প্র্যাকটিস অনুসরণ করুন।"></textarea>
+                <div class="example-prompts">
+                    <span style="font-size:0.7rem;color:var(--text-secondary);margin-right:0.3rem;">দ্রুত শুরু:</span>
+                    <button class="example-btn" onclick="loadExample(0)">🔧 Code (EN)</button>
+                    <button class="example-btn" onclick="loadExample(1)">📊 Data (EN)</button>
+                    <button class="example-btn" onclick="loadExample(2)">✍️ Content (EN)</button>
+                    <button class="example-btn" onclick="loadExample(3)">🔒 Security (EN)</button>
+                    <button class="example-btn" onclick="loadExample(4)">🧠 Research (EN)</button>
+                    <button class="example-btn" onclick="loadExample(5)" style="border-color:rgba(6,182,212,0.3);color:var(--accent-cyan);">🇧🇩 বাংলা উদাহরণ</button>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="btn-group">
+                <button class="btn btn-primary btn-block" onclick="scorePrompt()">
+                    <i class="fas fa-bolt"></i> স্কোর করুন
+                </button>
+                <button class="btn btn-secondary" onclick="clearAll()">
+                    <i class="fas fa-rotate-left"></i> ক্লিয়ার
+                </button>
+            </div>
+
+            <!-- Results -->
+            <div class="scorer-section" id="scorerSection">
+                <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;">
+                    <i class="fas fa-chart-simple" style="color:var(--accent-orange);font-size:1.2rem;"></i>
+                    <span style="font-weight:700;font-size:1.1rem;">স্কোরিং রিপোর্ট</span>
+                    <span style="flex:1;"></span>
+                    <button class="btn btn-secondary" onclick="copyScore()" style="padding:0.3rem 0.8rem;font-size:0.7rem;">
+                        <i class="fas fa-copy"></i> কপি
+                    </button>
+                </div>
+                <div id="scoreDisplay">
+                    <div class="placeholder-text">প্রম্পট স্কোর করতে উপরের বাটনে ক্লিক করুন</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ---------- EXAMPLE PROMPTS ----------
+        const examples = [
+            // English examples
+            `Act as a Senior Full-Stack Developer with 10+ years of experience. Build a REST API for user authentication with JWT tokens. Include error handling, input validation, and follow security best practices. Use Node.js with Express and PostgreSQL. Return code with inline comments.`,
+            `Act as a Senior Data Analyst with 15+ years of experience. Analyze sales data from 2022-2025 and create an executive dashboard. Key metrics: revenue, customer acquisition cost, churn rate. Provide actionable insights for business growth. Format: executive summary with key findings and recommendations.`,
+            `Act as a Senior Technical Content Writer with 10+ years of experience. Write a blog post about AI trends in 2026. Target audience: general public. Keep it conversational and beginner-friendly. Include 5 key trends, expert quotes, and future predictions. SEO optimize with relevant keywords. Length: ~2000 words.`,
+            `Act as a Senior Cybersecurity Consultant with 15+ years of experience. Perform a security audit of a web application built with React and Node.js. The application handles payment data and needs PCI-DSS compliance. Provide a risk assessment table with CWE/CVE references. Include remediation steps for each vulnerability.`,
+            `Act as a Senior AI Research Scientist with 10+ years of experience. Summarize recent research papers on transformer architecture efficiency improvements. Target audience: beginners and students. Use analogies to explain complex concepts. Include a comparison table of key innovations and their practical implications.`,
+            // Bengali example
+            `আপনি একজন সিনিয়র ফুল-স্ট্যাক ডেভেলপার হিসেবে কাজ করুন যার ১০+ বছরের অভিজ্ঞতা রয়েছে। JWT টোকেন ব্যবহার করে ইউজার অথেন্টিকেশনের জন্য একটি REST API তৈরি করুন। এররে হ্যান্ডলিং, ইনপুট ভ্যালিডেশন এবং সিকিউরিটি বেস্ট প্র্যাকটিস অনুসরণ করুন। Node.js, Express এবং PostgreSQL ব্যবহার করুন। কোড সহ ইনলাইন কমেন্ট রিটার্ন করুন।`
+        ];
+
+        let lastScoredPrompt = '';
+
+        function loadExample(index) {
+            document.getElementById('promptInput').value = examples[index] || '';
+            scorePrompt();
+        }
+
+        // ---------- SCORER ENGINE ----------
+        function scorePrompt() {
+            const prompt = document.getElementById('promptInput').value;
+            
+            // Check if prompt is empty or only whitespace
+            if (!prompt || prompt.trim().length === 0) {
+                document.getElementById('scorerSection').classList.remove('visible');
+                document.getElementById('scoreDisplay').innerHTML = `
+                    <div class="placeholder-text">⚠️ অনুগ্রহ করে একটি প্রম্পট লিখুন বা পেস্ট করুন</div>
+                `;
+                showToast('⚠️ অনুগ্রহ করে একটি প্রম্পট লিখুন বা পেস্ট করুন', '#ef4444');
+                return;
+            }
+
+            if (prompt.trim().length < 10) {
+                document.getElementById('scorerSection').classList.remove('visible');
+                document.getElementById('scoreDisplay').innerHTML = `
+                    <div class="placeholder-text">⚠️ প্রম্পটটি খুব ছোট। অন্তত ১০ অক্ষরের একটি অর্থপূর্ণ প্রম্পট লিখুন।</div>
+                `;
+                showToast('⚠️ প্রম্পটটি খুব ছোট', '#ef4444');
+                return;
+            }
+
+            const result = analyzePrompt(prompt);
+            renderScore(result);
+            document.getElementById('scorerSection').classList.add('visible');
+            lastScoredPrompt = prompt;
+            showToast('✅ স্কোর সম্পন্ন!', '#10b981');
+        }
+
+        function analyzePrompt(prompt) {
+            let score = 0;
+            const details = {};
+            let feedback = [];
+            const text = prompt.toLowerCase();
+            
+            // Detect if prompt is in Bengali (contains Bengali Unicode characters)
+            const isBengali = /[\u0980-\u09FF]/.test(prompt);
+            
+            // Keywords for Bengali and English
+            const keywords = {
+                // Role/Expertise
+                role: isBengali ? 
+                    ['ভূমিকা', 'হিসেবে', 'অভিজ্ঞতা', 'বিশেষজ্ঞ', 'ডেভেলপার', 'বিশ্লেষক', 'কনসালটেন্ট', 'রাইটার', 'সিনিয়র'] :
+                    ['role', 'expertise', 'experience', 'developer', 'analyst', 'consultant', 'writer', 'senior', 'act as'],
+                
+                // Task/Goal
+                task: isBengali ?
+                    ['কাজ', 'টাস্ক', 'উদ্দেশ্য', 'লক্ষ্য', 'নির্মাণ', 'তৈরি', 'লিখুন', 'বিশ্লেষণ', 'বিকাশ', 'উন্নত'] :
+                    ['task', 'goal', 'objective', 'build', 'create', 'write', 'analyze', 'develop', 'purpose'],
+                
+                // Audience
+                audience: isBengali ?
+                    ['শ্রোতা', 'টার্গেট', 'ব্যবহারকারী', 'দর্শক', 'জনসাধারণ', 'শিক্ষার্থী', 'নতুন'] :
+                    ['audience', 'target', 'user', 'public', 'student', 'beginner', 'team'],
+                
+                // Format
+                format: isBengali ?
+                    ['ফরম্যাট', 'গঠন', 'আউটপুট', 'রিটার্ন', 'প্রতিক্রিয়া', 'সারাংশ', 'তালিকা'] :
+                    ['format', 'structure', 'output', 'return', 'response', 'summary', 'list', 'table'],
+                
+                // Constraints
+                constraint: isBengali ?
+                    ['সীমাবদ্ধতা', 'শর্ত', 'প্রয়োজন', 'অবশ্যই', 'উচিত', 'নিষেধ', 'সীমা'] :
+                    ['constraint', 'require', 'must', 'should', 'limit', 'need', 'boundary'],
+                
+                // Action words
+                action: isBengali ?
+                    ['প্রদান', 'তৈরি', 'জেনারেট', 'রিটার্ন', 'নিশ্চিত', 'অন্তর্ভুক্ত', 'সরবরাহ'] :
+                    ['provide', 'deliver', 'generate', 'create', 'return', 'ensure', 'include', 'give'],
+                
+                // Checklist/Quality
+                quality: isBengali ?
+                    ['যাচাই', 'পরীক্ষা', 'মান', 'রিভিউ', 'নিশ্চিত', 'ভেরিফাই'] :
+                    ['check', 'verify', 'quality', 'review', 'ensure', 'validate']
+            };
+
+            // 1. Clarity & Specificity (0-25)
+            let clarity = 10;
+            if (/^#\s|^##\s|^###\s/im.test(prompt)) clarity += 4;
+            if (prompt.includes('**') || prompt.includes('__')) clarity += 2;
+            
+            // Check for role keywords
+            if (keywords.role.some(k => text.includes(k))) clarity += 3;
+            // Check for task keywords
+            if (keywords.task.some(k => text.includes(k))) clarity += 3;
+            // Check for audience keywords
+            if (keywords.audience.some(k => text.includes(k))) clarity += 3;
+            
+            if (prompt.length > 150) clarity += 3;
+            if (/\b(specific|detailed|explicit|clearly|স্পষ্ট|বিস্তারিত|সুনির্দিষ্ট)\b/i.test(text)) clarity += 2;
+            
+            clarity = Math.min(25, clarity);
+            score += clarity;
+            details.clarity = clarity;
+            if (clarity < 18) {
+                feedback.push({ icon: '🔍', text: isBengali ? 
+                    'প্রম্পটে ভূমিকা, কাজ, শ্রোতা স্পষ্টভাবে উল্লেখ করুন। হেডিং বা বোল্ড টেক্সট ব্যবহার করুন।' :
+                    'Clearly mention Role, Task, and Audience in your prompt. Use headings or bold text.'
+                });
+            }
+
+            // 2. Structure & Organization (0-25)
+            let structure = 8;
+            const headers = (prompt.match(/^#+\s/mg) || []).length;
+            if (headers >= 2) structure += 4;
+            if (headers >= 4) structure += 4;
+            if (/\n\s*[-•*]\s/m.test(prompt)) structure += 3;
+            if (/^\s*\d+\.\s/m.test(prompt)) structure += 3;
+            if (/\n\s*---\s*\n/.test(prompt)) structure += 3;
+            
+            structure = Math.min(25, structure);
+            score += structure;
+            details.structure = structure;
+            if (structure < 18) {
+                feedback.push({ icon: '📋', text: isBengali ?
+                    'প্রম্পটকে সেকশনে ভাগ করুন (## হেডিং), বুলেট পয়েন্ট বা সংখ্যা ব্যবহার করুন।' :
+                    'Divide your prompt into sections (## headings), use bullet points or numbered lists.'
+                });
+            }
+
+            // 3. Completeness (0-25)
+            let complete = 8;
+            if (keywords.role.some(k => text.includes(k))) complete += 3;
+            if (keywords.task.some(k => text.includes(k))) complete += 3;
+            if (keywords.audience.some(k => text.includes(k))) complete += 3;
+            if (keywords.format.some(k => text.includes(k))) complete += 3;
+            if (keywords.constraint.some(k => text.includes(k))) complete += 3;
+            
+            // Context/background detection
+            if (/\b(context|background|tech stack|industry|domain|প্রসঙ্গ|পটভূমি|ইন্ডাস্ট্রি|ডোমেইন)\b/i.test(text)) complete += 3;
+            if (/\b(check|verify|quality|review|যাচাই|পরীক্ষা|মান|রিভিউ)\b/i.test(text)) complete += 2;
+            
+            complete = Math.min(25, complete);
+            score += complete;
+            details.complete = complete;
+            if (complete < 18) {
+                feedback.push({ icon: '📝', text: isBengali ?
+                    'ভূমিকা, কাজ, শ্রোতা, ফরম্যাট, কনস্ট্রেইন্ট সব সেকশন অন্তর্ভুক্ত করুন।' :
+                    'Include all sections: Role, Task, Audience, Format, and Constraints.'
+                });
+            }
+
+            // 4. Actionability & Precision (0-15)
+            let actionable = 6;
+            if (keywords.action.some(k => text.includes(k))) actionable += 3;
+            if (/\b(actionable|specific|detailed|concrete|explicit|কার্যকর|সুনির্দিষ্ট|বিস্তারিত)\b/i.test(text)) actionable += 2;
+            if (/\b(step by step|guide|instructions|process|পদক্ষেপ|নির্দেশনা|প্রক্রিয়া)\b/i.test(text)) actionable += 2;
+            if (/\b(example|sample|template|pattern|উদাহরণ|নমুনা|টেমপ্লেট)\b/i.test(text)) actionable += 2;
+            if (/\b(production-ready|best practice|standard|optimized|উৎপাদন-প্রস্তুত|সেরা চর্চা|অপটিমাইজড)\b/i.test(text)) actionable += 2;
+            if (/\b(include|ensure|must|should|required|অন্তর্ভুক্ত|নিশ্চিত|অবশ্যই|উচিত)\b/i.test(text)) actionable += 2;
+            
+            actionable = Math.min(15, actionable);
+            score += actionable;
+            details.actionable = actionable;
+            if (actionable < 10) {
+                feedback.push({ icon: '🎯', text: isBengali ?
+                    'আপনি কী চান তা স্পষ্ট করুন (যেমন: "প্রদান", "তৈরি", "রিটার্ন")। সুনির্দিষ্ট নির্দেশনা দিন।' :
+                    'Be clear about what you want (e.g., "provide", "generate", "return"). Give specific instructions.'
+                });
+            }
+
+            // 5. Constraint & Requirement Coverage (0-10)
+            let coverage = 3;
+            const bulletCount = (prompt.match(/^\s*[-•*]\s/mg) || []).length;
+            if (bulletCount >= 2) coverage += 2;
+            if (bulletCount >= 4) coverage += 3;
+            if (keywords.constraint.some(k => text.includes(k))) coverage += 2;
+            if (/\b(include|ensure|provide|cover|address|অন্তর্ভুক্ত|নিশ্চিত|সরবরাহ|কভার)\b/i.test(text)) coverage += 2;
+            
+            coverage = Math.min(10, coverage);
+            score += coverage;
+            details.coverage = coverage;
+            if (coverage < 6) {
+                feedback.push({ icon: '⚙️', text: isBengali ?
+                    'কনস্ট্রেইন্ট বা রিকোয়ারমেন্ট যোগ করুন (যেমন: "সর্বোচ্চ ৫০০ শব্দ", "কোনো জার্গন নয়")।' :
+                    'Add constraints or requirements (e.g., "max 500 words", "no jargon").'
+                });
+            }
+
+            // Bonus: Role + Task clarity
+            if (keywords.role.some(k => text.includes(k)) && keywords.task.some(k => text.includes(k))) {
+                score += 2;
+            }
+
+            // Normalize to 0-100
+            score = Math.min(100, Math.round(score));
+
+            return { score, details, feedback, isBengali };
+        }
+
+        function renderScore(result) {
+            const { score, details, feedback, isBengali } = result;
+            const color = score >= 80 ? '#10b981' : score >= 60 ? '#f59e0b' : '#ef4444';
+            const label = score >= 80 ? '🌟 Excellent' : score >= 60 ? '👍 Good' : '🔧 Needs Improvement';
+            
+            // Labels in Bengali or English
+            const labels = {
+                clarity: isBengali ? 'স্পষ্টতা' : 'Clarity',
+                structure: isBengali ? 'গঠন' : 'Structure',
+                complete: isBengali ? 'সম্পূর্ণতা' : 'Completeness',
+                actionable: isBengali ? 'কার্যকারিতা' : 'Actionability',
+                coverage: isBengali ? 'কভারেজ' : 'Coverage'
+            };
+
+            let html = `
+                <div class="score-ring">
+                    <div class="score-circle" style="border-color:${color}; color:${color};">${score}</div>
+                    <div class="score-details">
+                        <div style="margin-bottom:0.3rem;">
+                            <span class="badge-score" style="background:${color}22; color:${color}; border:1px solid ${color};">${label}</span>
+                            <span style="font-size:0.7rem;color:var(--text-secondary);margin-left:0.8rem;">${score}/100</span>
+                        </div>
+                        <div class="score-bar">
+                            <span class="bar-label">${labels.clarity}</span>
+                            <div class="bar-track"><div class="bar-fill" style="width:${(details.clarity/25)*100}%; background:#3b82f6;"></div></div>
+                            <span class="bar-value">${details.clarity}/25</span>
+                        </div>
+                        <div class="score-bar">
+                            <span class="bar-label">${labels.structure}</span>
+                            <div class="bar-track"><div class="bar-fill" style="width:${(details.structure/25)*100}%; background:#8b5cf6;"></div></div>
+                            <span class="bar-value">${details.structure}/25</span>
+                        </div>
+                        <div class="score-bar">
+                            <span class="bar-label">${labels.complete}</span>
+                            <div class="bar-track"><div class="bar-fill" style="width:${(details.complete/25)*100}%; background:#06b6d4;"></div></div>
+                            <span class="bar-value">${details.complete}/25</span>
+                        </div>
+                        <div class="score-bar">
+                            <span class="bar-label">${labels.actionable}</span>
+                            <div class="bar-track"><div class="bar-fill" style="width:${(details.actionable/15)*100}%; background:#ec4899;"></div></div>
+                            <span class="bar-value">${details.actionable}/15</span>
+                        </div>
+                        <div class="score-bar">
+                            <span class="bar-label">${labels.coverage}</span>
+                            <div class="bar-track"><div class="bar-fill" style="width:${(details.coverage/10)*100}%; background:#f59e0b;"></div></div>
+                            <span class="bar-value">${details.coverage}/10</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            if (feedback.length) {
+                html += `
+                    <div class="score-feedback">
+                        <strong>💡 ${isBengali ? 'উন্নতির জন্য পরামর্শ:' : 'Suggestions for improvement:'}</strong>
+                        <ul>
+                            ${feedback.map(f => `<li><i class="fas fa-arrow-right"></i> ${f.text}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            } else if (score >= 80) {
+                html += `
+                    <div class="score-feedback" style="border-left-color:var(--accent-green);color:var(--accent-green);">
+                        🎉 ${isBengali ? 'চমৎকার! আপনার প্রম্পট খুবই কার্যকরী এবং সম্পূর্ণ।' : 'Excellent! Your prompt is very effective and complete.'}
+                    </div>
+                `;
+            } else if (score >= 60) {
+                html += `
+                    <div class="score-feedback" style="border-left-color:var(--accent-orange);">
+                        👍 ${isBengali ? 'ভালো প্রম্পট। উপরের পরামর্শগুলো অনুসরণ করে আরও উন্নত করুন।' : 'Good prompt. Follow the suggestions above to improve further.'}
+                    </div>
+                `;
+            }
+
+            document.getElementById('scoreDisplay').innerHTML = html;
+        }
+
+        // ---------- COPY SCORE ----------
+        function copyScore() {
+            const scoreText = document.getElementById('scoreDisplay').innerText;
+            if (!scoreText || scoreText.includes('স্কোর করতে') || scoreText.includes('অনুগ্রহ করে')) {
+                showToast('⚠️ প্রথমে একটি প্রম্পট স্কোর করুন', '#ef4444');
+                return;
+            }
+            navigator.clipboard.writeText(scoreText).then(() => {
+                showToast('📋 স্কোর কপি করা হয়েছে!', '#10b981');
+            }).catch(() => {
+                showToast('❌ কপি করতে ব্যর্থ হয়েছে', '#ef4444');
+            });
+        }
+
+        // ---------- CLEAR ----------
+        function clearAll() {
+            document.getElementById('promptInput').value = '';
+            document.getElementById('scorerSection').classList.remove('visible');
+            document.getElementById('scoreDisplay').innerHTML = `
+                <div class="placeholder-text">প্রম্পট স্কোর করতে উপরের বাটনে ক্লিক করুন</div>
+            `;
+            lastScoredPrompt = '';
+            showToast('🔄 ক্লিয়ার করা হয়েছে', '#3b82f6');
+        }
+
+        // ---------- TOAST ----------
+        function showToast(msg, color) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.style.background = color;
+            t.style.display = 'block';
+            t.style.animation = 'none';
+            t.offsetHeight;
+            t.style.animation = 'toastIn 0.4s ease-out, toastOut 0.4s ease-in 2.5s forwards';
+            setTimeout(() => { t.style.display = 'none'; }, 3000);
+        }
+
+        // ---------- KEYBOARD SHORTCUT ----------
+        document.getElementById('promptInput').addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                scorePrompt();
+            }
+        });
+
+        // ---------- REAL-TIME VALIDATION ----------
+        document.getElementById('promptInput').addEventListener('input', function() {
+            if (!this.value || this.value.trim().length === 0) {
+                document.getElementById('scorerSection').classList.remove('visible');
+                document.getElementById('scoreDisplay').innerHTML = `
+                    <div class="placeholder-text">প্রম্পট স্কোর করতে উপরের বাটনে ক্লিক করুন</div>
+                `;
+            }
+        });
+
+        // ---------- AUTO-SCORE ON LOAD ----------
+        window.addEventListener('DOMContentLoaded', function() {
+            // Load the Bengali example by default
+            loadExample(5);
+        });
+    </script>
+</body>
+</html>
